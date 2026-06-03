@@ -1,0 +1,217 @@
+/* ====================================
+   ADMIN WRAPPER
+==================================== */
+
+.admin-wrapper{
+    padding:40px;
+}
+
+/* ====================================
+   NAVBAR
+==================================== */
+
+.admin-navbar{
+    background:#fff;
+
+    border:1px solid #f3cddd;
+    border-radius:30px;
+
+    padding:30px 40px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:40px;
+
+    box-shadow:
+        0 12px 28px rgba(247,200,216,.08);
+}
+
+/* ====================================
+   LOGO
+==================================== */
+
+.admin-logo{
+    font-size:48px;
+    font-weight:700;
+
+    color:#1d1d1d;
+}
+
+/* ====================================
+   RIGHT AREA
+==================================== */
+
+.admin-right{
+    display:flex;
+    align-items:center;
+    gap:40px;
+}
+
+/* ====================================
+   MENU
+==================================== */
+
+.admin-menu{
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    list-style:none;
+
+    margin:0;
+    padding:0;
+}
+
+.admin-menu a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:13px 24px;
+
+    border-radius:999px;
+
+    text-decoration:none;
+
+    background:white;
+
+    color:#1f1f1f;
+
+    font-size:14px;
+    font-weight:700;
+
+    border:1px solid #f7c8d8;
+
+    transition:all .25s ease;
+
+    box-shadow:
+        0 10px 22px rgba(247,200,216,.10);
+}
+
+/* ====================================
+   HOVER MENU
+==================================== */
+
+.admin-menu a:hover{
+    transform:translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7c8d8,
+            #f3a8c4
+        );
+
+    color:white;
+
+    box-shadow:
+        0 14px 28px rgba(247,200,216,.30);
+}
+
+/* ====================================
+   ACTIVE MENU
+==================================== */
+
+.admin-menu a.active{
+    background:
+        linear-gradient(
+            135deg,
+            #f7c8d8,
+            #f3a8c4
+        );
+
+    color:white;
+
+    box-shadow:
+        0 14px 30px rgba(247,200,216,.28);
+}
+
+/* ====================================
+   ADMIN BUTTON
+==================================== */
+
+.admin-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:13px 24px;
+
+    border:none;
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7c8d8,
+            #f3a8c4
+        );
+
+    color:#1f1f1f !important;
+
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:all .25s ease;
+
+    box-shadow:
+        0 14px 30px rgba(247,200,216,.22);
+}
+
+/* ====================================
+   BUTTON HOVER
+==================================== */
+
+.admin-btn:hover{
+    transform:translateY(-2px);
+
+    color:white !important;
+
+    opacity:.95;
+
+    box-shadow:
+        0 18px 34px rgba(247,200,216,.34);
+}
+
+/* ====================================
+   CONTAINER
+==================================== */
+
+.admin-container{
+    margin-top:30px;
+}
+
+/* ====================================
+   RESPONSIVE
+==================================== */
+
+@media(max-width:768px){
+
+    .admin-navbar{
+        flex-direction:column;
+        gap:25px;
+    }
+
+    .admin-right{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .admin-menu{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .admin-logo{
+        font-size:36px;
+        text-align:center;
+    }
+
+}
+

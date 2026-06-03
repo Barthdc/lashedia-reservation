@@ -1,0 +1,232 @@
+/* ====================================
+   LOGIN PAGE PINK THEME
+==================================== */
+
+.login-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+
+    padding:40px 20px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff5f8,
+            #ffffff
+        );
+}
+
+.login-card{
+    width:100%;
+    max-width:430px;
+
+    background:white;
+
+    padding:50px 40px;
+
+    border-radius:32px;
+
+    border:1px solid #ffd9e6;
+
+    box-shadow:
+        0 16px 40px rgba(247,200,216,.18);
+}
+
+.login-card h1{
+    font-size:42px;
+
+    line-height:1.15;
+
+    margin-bottom:12px;
+
+    text-align:center;
+
+    color:#4b4453;
+
+    font-family:'Playfair Display', serif;
+}
+
+.subtitle{
+    text-align:center;
+
+    color:#8a7380;
+
+    margin-bottom:34px;
+
+    font-size:15px;
+}
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:10px;
+
+    font-size:14px;
+    font-weight:600;
+
+    color:#4b4453;
+}
+
+.form-group input{
+    width:100%;
+
+    height:56px;
+
+    padding:0 18px;
+
+    border-radius:18px;
+
+    border:1px solid #f5d9e4;
+
+    background:#fffafb;
+
+    font-size:14px;
+
+    transition:.25s ease;
+
+    font-family:'DM Sans', sans-serif;
+}
+
+.form-group input:focus{
+    outline:none;
+
+    background:white;
+
+    border-color:#f3abc3;
+
+    box-shadow:
+        0 0 0 5px rgba(247,200,216,.20);
+}
+
+/* ====================================
+   BUTTON LOGIN
+==================================== */
+
+.btn-auth{
+    width:100%;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7c8d8,
+            #f3a8c4
+        );
+
+    color:white;
+
+    font-size:15px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+    font-family:'DM Sans',sans-serif;
+
+    box-shadow:
+        0 12px 28px rgba(247,200,216,.28);
+}
+
+.btn-auth:hover{
+    transform:translateY(-2px);
+
+    opacity:.95;
+
+    box-shadow:
+        0 18px 35px rgba(247,200,216,.35);
+}
+
+/* ====================================
+   PINK OVERRIDE LOGIN
+==================================== */
+
+/* BUTTON MASUK */
+.btn-auth{
+    background: linear-gradient(
+        135deg,
+        #f7c8d8,
+        #f3a9c2
+    ) !important;
+
+    box-shadow:
+        0 12px 28px rgba(244,182,201,.28) !important;
+}
+
+/* HOVER BUTTON */
+.btn-auth:hover{
+    background: linear-gradient(
+        135deg,
+        #f5bdd0,
+        #ef9fbc
+    ) !important;
+}
+
+/* LINK KEMBALI */
+.btn-back{
+    color:#e38cab !important;
+}
+
+.btn-back:hover{
+    color:#d86f98 !important;
+}
+
+/* LINK DAFTAR */
+.register-text a{
+    color:#e38cab !important;
+}
+
+.register-text a:hover{
+    color:#d86f98 !important;
+}
+
+/* INPUT */
+.form-group input{
+    border:1px solid #f3dce6 !important;
+}
+
+/* SAAT INPUT DIKLIK */
+.form-group input:focus{
+    border-color:#f3a9c2 !important;
+
+    box-shadow:
+        0 0 0 5px rgba(244,182,201,.20) !important;
+}
+
+/* =====================================
+   LOGIN & REGISTER BUTTON TEXT
+===================================== */
+
+.login-card button,
+.register-card button,
+.login-card .btn-auth,
+.register-card .btn-auth,
+.login-card .btn-back,
+.register-card .btn-back,
+.login-text a,
+.register-text a{
+    color:#1f1f1f !important;
+
+    transition:.25s ease;
+}
+
+/* HOVER */
+
+.login-card button:hover,
+.register-card button:hover,
+.login-card .btn-auth:hover,
+.register-card .btn-auth:hover{
+    color:white !important;
+}
