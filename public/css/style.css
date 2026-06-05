@@ -6102,3 +6102,603 @@ button.nav-book-btn:hover{
     opacity:1 !important;
     box-shadow:0 12px 24px rgba(255,255,255,.45) !important;
 }
+
+/* =====================================
+   FINAL GLOBAL HOVER OVERRIDE
+   LASHEDIA PINK NAVBAR THEME
+===================================== */
+
+/* NAVBAR UTAMA */
+.navbar,
+.navbar-premium,
+.admin-navbar{
+    background:#f7c8d8 !important;
+    border-bottom:1px solid #f3a8c4 !important;
+    box-shadow:0 8px 24px rgba(247,200,216,.25) !important;
+}
+
+/* NAVBAR INNER */
+.navbar-inner{
+    background:transparent !important;
+}
+
+/* LOGO TEXT */
+.navbar-logo span,
+.navbar__brand span,
+.admin-logo,
+.admin-navbar-brand{
+    color:#1f1f1f !important;
+}
+
+/* LOGO CIRCLE */
+.logo-circle,
+.navbar__brand-icon{
+    background:#ffffff !important;
+    box-shadow:0 8px 22px rgba(255,255,255,.35) !important;
+}
+
+/* SEMUA LINK MENU NAVBAR */
+.navbar-menu a,
+.navbar__links a,
+.admin-menu a,
+.admin-navbar-menu a,
+.nav-login{
+    background:transparent !important;
+    color:#1f1f1f !important;
+    text-decoration:none !important;
+    transition:all .25s ease !important;
+}
+
+/* HOVER LINK MENU */
+.navbar-menu a:hover,
+.navbar__links a:hover,
+.admin-menu a:hover,
+.admin-navbar-menu a:hover,
+.nav-login:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(255,255,255,.35) !important;
+}
+
+/* ACTIVE LINK MENU */
+.navbar-menu a.active,
+.navbar__links a.active,
+.admin-menu a.active,
+.admin-navbar-menu a.active{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    box-shadow:0 8px 18px rgba(255,255,255,.38) !important;
+}
+
+/* AREA KANAN NAVBAR */
+.navbar-right,
+.navbar__actions{
+    background:transparent !important;
+}
+
+/* SEMUA BUTTON NAVBAR */
+.nav-book-btn,
+.profile-btn,
+.profile-btn-premium,
+.btn-login,
+.btn-register,
+.btn-logout,
+.logout-btn,
+.profile-logout,
+.admin-btn,
+.admin-logout,
+.admin-add-btn,
+.admin-action-btn{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    border:none !important;
+    text-decoration:none !important;
+    transition:all .25s ease !important;
+    box-shadow:0 8px 18px rgba(255,255,255,.35) !important;
+}
+
+/* HOVER SEMUA BUTTON NAVBAR */
+.nav-book-btn:hover,
+.profile-btn:hover,
+.profile-btn-premium:hover,
+.btn-login:hover,
+.btn-register:hover,
+.btn-logout:hover,
+.logout-btn:hover,
+.profile-logout:hover,
+.admin-btn:hover,
+.admin-logout:hover,
+.admin-add-btn:hover,
+.admin-action-btn:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    opacity:1 !important;
+    box-shadow:0 12px 24px rgba(255,255,255,.45) !important;
+}
+
+/* KHUSUS BOOK NOW */
+.nav-book-btn,
+a.nav-book-btn,
+button.nav-book-btn{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* HOVER BOOK NOW */
+.nav-book-btn:hover,
+a.nav-book-btn:hover,
+button.nav-book-btn:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    opacity:1 !important;
+}
+
+/* JIKA BOOK NOW MENGGUNAKAN CLASS LAIN */
+.btn-pesan:hover,
+a.btn-pesan:hover,
+button.btn-pesan:hover,
+.btn-booking:hover,
+a.btn-booking:hover,
+button.btn-booking:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    opacity:1 !important;
+}
+
+/* PROFILE DROPDOWN */
+.profile-menu{
+    background:#ffffff !important;
+    border:1px solid #f3a8c4 !important;
+    box-shadow:0 16px 40px rgba(247,200,216,.25) !important;
+}
+
+/* PROFILE NAME */
+.profile-name{
+    color:#1f1f1f !important;
+    border-bottom:1px solid #f3a8c4 !important;
+}
+
+/* SEMUA BUTTON UMUM SAAT HOVER TETAP HITAM */
+button:hover,
+.btn:hover,
+a[class*="btn"]:hover{
+    color:#1f1f1f !important;
+}
+
+/* KECUALI BUTTON YANG MEMANG BUKAN NAVBAR, TETAP AMAN */
+.btn-auth:hover,
+.btn-purple:hover,
+.penata-card button:hover{
+    color:#1f1f1f !important;
+}
+
+/* MOBILE NAVBAR */
+@media(max-width:900px){
+    .navbar,
+    .navbar-premium,
+    .admin-navbar{
+        background:#f7c8d8 !important;
+    }
+
+    .navbar-menu a,
+    .navbar__links a,
+    .admin-menu a{
+        color:#1f1f1f !important;
+    }
+
+    .navbar-menu a:hover,
+    .navbar__links a:hover,
+    .admin-menu a:hover{
+        background:#ffffff !important;
+        color:#1f1f1f !important;
+    }
+}
+
+/* =====================================
+   FINAL OVERRIDE SEMUA BUTTON
+   Hover putih, font tetap hitam
+===================================== */
+
+/* SEMUA BUTTON UTAMA */
+button,
+.btn,
+.btn-login,
+.btn-register,
+.btn-logout,
+.btn-auth,
+.btn-purple,
+.btn-pesan,
+.btn-booking,
+.nav-book-btn,
+.profile-btn,
+.profile-btn-premium,
+.logout-btn,
+.profile-logout,
+.admin-btn,
+.admin-logout,
+.admin-add-btn,
+.admin-action-btn,
+.btn-admin,
+.btn-edit,
+.btn-delete,
+.penata-card button,
+a[class*="btn"]{
+    color:#1f1f1f !important;
+    transition:all .25s ease !important;
+}
+
+/* HOVER SEMUA BUTTON */
+button:hover,
+.btn:hover,
+.btn-login:hover,
+.btn-register:hover,
+.btn-logout:hover,
+.btn-auth:hover,
+.btn-purple:hover,
+.btn-pesan:hover,
+.btn-booking:hover,
+.nav-book-btn:hover,
+.profile-btn:hover,
+.profile-btn-premium:hover,
+.logout-btn:hover,
+.profile-logout:hover,
+.admin-btn:hover,
+.admin-logout:hover,
+.admin-add-btn:hover,
+.admin-action-btn:hover,
+.btn-admin:hover,
+.btn-edit:hover,
+.btn-delete:hover,
+.penata-card button:hover,
+a[class*="btn"]:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    opacity:1 !important;
+    box-shadow:0 12px 24px rgba(255,255,255,.45) !important;
+}
+
+/* BOOK NOW */
+.nav-book-btn,
+a.nav-book-btn,
+button.nav-book-btn{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* HOVER BOOK NOW */
+.nav-book-btn:hover,
+a.nav-book-btn:hover,
+button.nav-book-btn:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* BUTTON PESAN / BOOKING */
+.btn-pesan:hover,
+a.btn-pesan:hover,
+button.btn-pesan:hover,
+.btn-booking:hover,
+a.btn-booking:hover,
+button.btn-booking:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* BUTTON LOGIN REGISTER LOGOUT */
+.btn-login:hover,
+.btn-register:hover,
+.btn-logout:hover,
+.logout-btn:hover,
+.profile-logout:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* BUTTON PROFILE */
+.profile-btn:hover,
+.profile-btn-premium:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* BUTTON ADMIN */
+.admin-btn:hover,
+.admin-logout:hover,
+.admin-add-btn:hover,
+.admin-action-btn:hover,
+.btn-admin:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* BUTTON EDIT DAN DELETE */
+.btn-edit:hover,
+.btn-delete:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* BUTTON AUTH LOGIN / REGISTER */
+.btn-auth:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* BUTTON CARD PENATA */
+.penata-card button:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* CEGAH LINK BUTTON BERUBAH PUTIH */
+a[class*="btn"]:hover,
+button[class*="btn"]:hover{
+    color:#1f1f1f !important;
+}
+
+/* =====================================
+   FINAL POPUP ADMIN PINK GRADIENT
+   Background popup admin pink + putih
+===================================== */
+
+/* POPUP PROFILE / ADMIN */
+.profile-menu,
+.admin-popup,
+.admin-dropdown,
+.dropdown-menu{
+    background:
+        linear-gradient(
+            135deg,
+            #f7c8d8 0%,
+            #fff1f6 45%,
+            #ffffff 100%
+        ) !important;
+
+    border:1px solid #f3a8c4 !important;
+
+    box-shadow:
+        0 18px 45px rgba(247,200,216,.35) !important;
+
+    border-radius:22px !important;
+}
+
+/* NAMA USER DI POPUP */
+.profile-name,
+.admin-popup-name,
+.dropdown-header{
+    color:#1f1f1f !important;
+
+    border-bottom:1px solid rgba(243,168,196,.55) !important;
+
+    padding-bottom:12px !important;
+    margin-bottom:12px !important;
+
+    font-weight:700 !important;
+}
+
+/* BUTTON DI DALAM POPUP */
+.profile-menu a,
+.profile-menu button,
+.admin-popup a,
+.admin-popup button,
+.admin-dropdown a,
+.admin-dropdown button,
+.dropdown-menu a,
+.dropdown-menu button{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    border:none !important;
+
+    border-radius:999px !important;
+
+    padding:12px 18px !important;
+
+    text-decoration:none !important;
+
+    font-size:14px !important;
+    font-weight:700 !important;
+
+    transition:all .25s ease !important;
+
+    box-shadow:
+        0 8px 18px rgba(255,255,255,.40) !important;
+}
+
+/* HOVER BUTTON POPUP */
+.profile-menu a:hover,
+.profile-menu button:hover,
+.admin-popup a:hover,
+.admin-popup button:hover,
+.admin-dropdown a:hover,
+.admin-dropdown button:hover,
+.dropdown-menu a:hover,
+.dropdown-menu button:hover{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    transform:translateY(-2px) !important;
+
+    opacity:1 !important;
+
+    box-shadow:
+        0 12px 26px rgba(255,255,255,.55) !important;
+}
+
+/* LOGOUT BUTTON KHUSUS DI POPUP */
+.profile-logout,
+.logout-btn,
+.admin-logout{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    border:none !important;
+
+    border-radius:999px !important;
+
+    box-shadow:
+        0 8px 18px rgba(255,255,255,.40) !important;
+}
+
+/* HOVER LOGOUT */
+.profile-logout:hover,
+.logout-btn:hover,
+.admin-logout:hover{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    transform:translateY(-2px) !important;
+
+    opacity:1 !important;
+}
+
+/* JARAK ANTAR BUTTON DALAM POPUP */
+.profile-menu,
+.admin-popup,
+.admin-dropdown,
+.dropdown-menu{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:12px !important;
+}
+
+/* =====================================
+   FINAL POPUP ADMIN PINK WITH WHITE EDGE
+   Popup pink, tepian putih
+===================================== */
+
+/* POPUP ADMIN / PROFILE */
+.profile-menu,
+.admin-popup,
+.admin-dropdown,
+.dropdown-menu{
+    background:#f7c8d8 !important;
+
+    border:3px solid #ffffff !important;
+
+    box-shadow:
+        0 0 0 2px #f3a8c4,
+        0 18px 45px rgba(247,200,216,.35) !important;
+
+    border-radius:24px !important;
+
+    padding:16px !important;
+}
+
+/* NAMA USER DI POPUP */
+.profile-name,
+.admin-popup-name,
+.dropdown-header{
+    color:#1f1f1f !important;
+
+    border-bottom:2px solid #ffffff !important;
+
+    padding-bottom:12px !important;
+    margin-bottom:12px !important;
+
+    font-weight:700 !important;
+}
+
+/* BUTTON DI DALAM POPUP */
+.profile-menu a,
+.profile-menu button,
+.admin-popup a,
+.admin-popup button,
+.admin-dropdown a,
+.admin-dropdown button,
+.dropdown-menu a,
+.dropdown-menu button{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    border:2px solid #ffffff !important;
+
+    border-radius:999px !important;
+
+    padding:12px 18px !important;
+
+    text-decoration:none !important;
+
+    font-size:14px !important;
+    font-weight:700 !important;
+
+    transition:all .25s ease !important;
+
+    box-shadow:
+        0 8px 18px rgba(255,255,255,.35) !important;
+}
+
+/* HOVER BUTTON POPUP */
+.profile-menu a:hover,
+.profile-menu button:hover,
+.admin-popup a:hover,
+.admin-popup button:hover,
+.admin-dropdown a:hover,
+.admin-dropdown button:hover,
+.dropdown-menu a:hover,
+.dropdown-menu button:hover{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    border-color:#ffffff !important;
+
+    transform:translateY(-2px) !important;
+
+    opacity:1 !important;
+
+    box-shadow:
+        0 12px 26px rgba(255,255,255,.55) !important;
+}
+
+/* LOGOUT BUTTON KHUSUS */
+.profile-logout,
+.logout-btn,
+.admin-logout{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    border:2px solid #ffffff !important;
+
+    border-radius:999px !important;
+
+    box-shadow:
+        0 8px 18px rgba(255,255,255,.35) !important;
+}
+
+/* HOVER LOGOUT */
+.profile-logout:hover,
+.logout-btn:hover,
+.admin-logout:hover{
+    background:#ffffff !important;
+
+    color:#1f1f1f !important;
+
+    border-color:#ffffff !important;
+
+    transform:translateY(-2px) !important;
+
+    opacity:1 !important;
+}
+
+/* JARAK ANTAR BUTTON */
+.profile-menu,
+.admin-popup,
+.admin-dropdown,
+.dropdown-menu{
+    display:flex !important;
+    flex-direction:column !important;
+
+    gap:12px !important;
+}

@@ -20,6 +20,25 @@ use App\Http\Controllers\Admin\PowerBiBookingController;
 
 Route::redirect('/', '/home');
 
+/*
+|--------------------------------------------------------------------------
+| REDIRECT SETELAH LOGIN
+|--------------------------------------------------------------------------
+| Admin  -> /admin/dashboard
+| User   -> /home
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth'])->get('/dashboard', function () {
+
+    if (auth()->user()->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('home');
+
+})->name('dashboard');
+
 
 /*
 |--------------------------------------------------------------------------
