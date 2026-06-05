@@ -6,35 +6,33 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-  protected $fillable = [
+    protected $fillable = [
+        'user_id',
 
-    'user_id',
+        'name',
+        'email',
+        'phone',
 
-    'date',
-    'time',
-    'stylist',
+        'full_address',
+        'village',
+        'district',
+        'city',
+        'province',
+        'island',
+        'latitude',
+        'longitude',
+        'shipping_zone',
+        'shipping_cost',
+        'flight_ticket_cost',
+        'total_location_cost',
 
-    'name',
-    'email',
-    'phone',
-
-    'service',
-
-    'payment_method',
-    'payment_proof',
-
-    'note',
-
-    'status',
-
-];
-    public function user()
-{
-    return $this->belongsTo(User::class);
-}
-
-public function stylist()
-{
-    return $this->belongsTo(Stylist::class);
-}
+        'service',
+        'date',
+        'time',
+        'note',
+        'stylist',
+        'payment_method',
+        'payment_proof',
+        'status',
+    ];
 }

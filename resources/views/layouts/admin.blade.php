@@ -25,6 +25,15 @@
             <div class="admin-right">
 
                 <ul class="admin-menu">
+                    <li>
+
+        <a
+            href="{{ route('admin.dashboard') }}"
+            class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+        >
+            Dashboard
+        </a>
+                    </li>
 
                     <li>
                         <a href="{{ route('admin.bookings.index') }}"

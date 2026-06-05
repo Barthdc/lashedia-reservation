@@ -108,8 +108,83 @@
 
                 <p>
                     <strong>Catatan:</strong>
-                    {{ $booking->note }}
+                    {{ $booking->note ?? '-' }}
                 </p>
+
+                {{-- LOKASI PELANGGAN --}}
+                <div class="booking-location-info">
+
+                    <h4>Lokasi Pelanggan</h4>
+
+                    <p>
+                        <strong>Alamat Lengkap:</strong>
+                        {{ $booking->full_address ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Desa/Kelurahan:</strong>
+                        {{ $booking->village ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Kecamatan:</strong>
+                        {{ $booking->district ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Kota/Kabupaten:</strong>
+                        {{ $booking->city ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Provinsi:</strong>
+                        {{ $booking->province ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Pulau:</strong>
+                        {{ $booking->island ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Koordinat:</strong>
+                        {{ $booking->latitude ?? '-' }},
+                        {{ $booking->longitude ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Zona Ongkir:</strong>
+                        {{ $booking->shipping_zone ?? '-' }}
+                    </p>
+
+                    <p>
+                        <strong>Ongkir:</strong>
+                        Rp{{ number_format($booking->shipping_cost ?? 0, 0, ',', '.') }}
+                    </p>
+
+                    <p>
+                        <strong>Tiket Pesawat:</strong>
+                        Rp{{ number_format($booking->flight_ticket_cost ?? 0, 0, ',', '.') }}
+                    </p>
+
+                    <p>
+                        <strong>Total Biaya Lokasi:</strong>
+                        Rp{{ number_format($booking->total_location_cost ?? 0, 0, ',', '.') }}
+                    </p>
+
+                    @if($booking->latitude && $booking->longitude)
+
+                        <a
+                            href="https://www.google.com/maps?q={{ $booking->latitude }},{{ $booking->longitude }}"
+                            target="_blank"
+                            class="btn-location-map"
+                        >
+                            Lihat Lokasi di Maps
+                        </a>
+
+                    @endif
+
+                </div>
 
                 @if($booking->reject_reason)
 
@@ -217,6 +292,8 @@
 .booking-header h1{
     font-size:38px;
     margin-bottom:10px;
+    color:#4b4453;
+    font-weight:900;
 }
 
 .booking-header p{
@@ -237,11 +314,13 @@
     justify-content:space-between;
     align-items:center;
     margin-bottom:25px;
+    gap:20px;
 }
 
 .booking-top h3{
     font-size:24px;
     margin-bottom:6px;
+    color:#2f2935;
 }
 
 .booking-date{
@@ -252,6 +331,7 @@
 .booking-content p{
     margin-bottom:10px;
     color:#555;
+    line-height:1.6;
 }
 
 .status{
@@ -280,6 +360,7 @@
     display:flex;
     gap:15px;
     margin-top:25px;
+    flex-wrap:wrap;
 }
 
 .approve-btn,
@@ -365,6 +446,73 @@
     border-radius:18px;
     border:1px solid #f1d7e1;
     box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+/* LOKASI PELANGGAN */
+
+.booking-location-info{
+    background:#fff7fb;
+    border:1px solid #ffe0ea;
+    border-radius:18px;
+    padding:18px;
+    margin-top:22px;
+    margin-bottom:18px;
+}
+
+.booking-location-info h4{
+    margin:0 0 14px 0;
+    color:#4b4453;
+    font-size:18px;
+    font-weight:900;
+}
+
+.booking-location-info p{
+    margin:7px 0;
+    color:#4b4453;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.btn-location-map{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:12px;
+    padding:11px 20px;
+    border-radius:999px;
+    background:#f7c8d8;
+    color:#3f3548;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:800;
+    transition:.25s ease;
+    box-shadow:0 8px 18px rgba(247,200,216,.35);
+}
+
+.btn-location-map:hover{
+    background:#f3a8c4;
+    color:white;
+    transform:translateY(-2px);
+}
+
+@media(max-width:768px){
+    .booking-top{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .booking-item{
+        padding:22px;
+    }
+
+    .booking-actions{
+        flex-direction:column;
+    }
+
+    .approve-btn,
+    .pending-btn{
+        width:100%;
+    }
 }
 
 </style>

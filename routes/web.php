@@ -9,6 +9,8 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GoogleCalendarController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\PowerBiBookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,8 +107,6 @@ Route::middleware(['auth'])->group(function () {
 |--------------------------------------------------------------------------
 | GOOGLE CALENDAR
 |--------------------------------------------------------------------------
-| Hanya admin yang boleh menghubungkan akun Google Calendar.
-|--------------------------------------------------------------------------
 */
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -140,7 +140,32 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
 
-        Route::redirect('/', '/admin/bookings');
+        Route::redirect('/', '/admin/dashboard');
+
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        /*
+        |--------------------------------------------------------------------------
+        | REDIRECT ADMIN KE DASHBOARD
+        |--------------------------------------------------------------------------
+        */
+
+        Route::redirect('/', '/admin/dashboard');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DASHBOARD ADMIN / POWER BI
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/powerbi/bookings.csv', [PowerBiBookingController::class, 'bookingsCsv'])
+            ->name('powerbi.bookings.csv');
+
 
         /*
         |--------------------------------------------------------------------------

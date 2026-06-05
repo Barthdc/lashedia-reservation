@@ -92,8 +92,7 @@
                     </div>
 
                     @if(Auth::user()->role === 'admin')
-                        <a href="{{ route('admin.bookings.index') }}"
-                           class="mobile-admin-btn">
+                        <a href="{{ route('admin.dashboard') }}">
                             Dashboard Admin
                         </a>
                     @endif
@@ -135,9 +134,9 @@
 
                     <div class="profile-menu">
 
-                        @if(Auth::user()->role === 'admin')
-                            <a href="{{ route('admin.bookings.index') }}"
-                               class="admin-btn">
+
+                       @if(Auth::user()->role === 'admin')
+                            <a href="{{ route('admin.dashboard') }}" class="admin-btn">
                                 Dashboard Admin
                             </a>
                         @endif

@@ -5842,3 +5842,263 @@ a[class*="btn"]:hover{
 .btn-update-gallery:active{
     transform:scale(.96);
 }
+/* =====================================
+   FINAL OVERRIDE NAVBAR PINK THEME
+   Background navbar pink
+   Hover putih
+   Font hover tetap hitam
+===================================== */
+
+/* NAVBAR UTAMA */
+.navbar,
+.navbar-premium{
+    background:#f7c8d8 !important;
+    border-bottom:1px solid #f3a8c4 !important;
+    box-shadow:0 8px 24px rgba(247,200,216,.25) !important;
+}
+
+/* NAVBAR INNER */
+.navbar-inner{
+    background:transparent !important;
+}
+
+/* LOGO */
+.navbar-logo span,
+.navbar__brand span{
+    color:#1f1f1f !important;
+}
+
+/* LOGO CIRCLE */
+.logo-circle,
+.navbar__brand-icon{
+    background:#ffffff !important;
+    box-shadow:0 8px 22px rgba(255,255,255,.35) !important;
+}
+
+/* MENU LINK NAVBAR PREMIUM */
+.navbar-menu a{
+    background:transparent !important;
+    color:#1f1f1f !important;
+    text-decoration:none !important;
+    transition:all .25s ease !important;
+}
+
+/* MENU LINK NAVBAR LAMA */
+.navbar__links a{
+    background:transparent !important;
+    color:#1f1f1f !important;
+    text-decoration:none !important;
+    transition:all .25s ease !important;
+}
+
+/* HOVER MENU */
+.navbar-menu a:hover,
+.navbar__links a:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(255,255,255,.35) !important;
+}
+
+/* ACTIVE MENU */
+.navbar-menu a.active,
+.navbar__links a.active{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    box-shadow:0 8px 18px rgba(255,255,255,.38) !important;
+}
+
+/* NAVBAR RIGHT AREA */
+.navbar-right,
+.navbar__actions{
+    background:transparent !important;
+}
+
+/* BUTTON LOGIN / REGISTER / PESAN / PROFILE */
+.nav-book-btn,
+.profile-btn,
+.profile-btn-premium,
+.btn-login,
+.btn-register,
+.btn-logout,
+.logout-btn,
+.admin-btn{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    border:none !important;
+    box-shadow:0 8px 18px rgba(255,255,255,.35) !important;
+    transition:all .25s ease !important;
+}
+
+/* HOVER BUTTON NAVBAR */
+.nav-book-btn:hover,
+.profile-btn:hover,
+.profile-btn-premium:hover,
+.btn-login:hover,
+.btn-register:hover,
+.btn-logout:hover,
+.logout-btn:hover,
+.admin-btn:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    opacity:1 !important;
+}
+
+/* TEXT LOGIN */
+.nav-login{
+    color:#1f1f1f !important;
+}
+
+.nav-login:hover{
+    color:#1f1f1f !important;
+}
+
+/* PROFILE DROPDOWN */
+.profile-menu{
+    background:#ffffff !important;
+    border:1px solid #f3a8c4 !important;
+    box-shadow:0 16px 40px rgba(247,200,216,.25) !important;
+}
+
+/* PROFILE NAME */
+.profile-name{
+    color:#1f1f1f !important;
+    border-bottom:1px solid #f3a8c4 !important;
+}
+
+/* LOGOUT BUTTON DALAM DROPDOWN */
+.profile-logout{
+    background:#f7c8d8 !important;
+    color:#1f1f1f !important;
+    box-shadow:0 8px 18px rgba(247,200,216,.28) !important;
+}
+
+.profile-logout:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* ADMIN NAVBAR JIKA ADA */
+.admin-navbar{
+    background:#f7c8d8 !important;
+    border:1px solid #f3a8c4 !important;
+    box-shadow:0 12px 28px rgba(247,200,216,.25) !important;
+}
+
+/* ADMIN MENU */
+.admin-menu a,
+.admin-navbar-menu a,
+.admin-navbar-menu button{
+    background:transparent !important;
+    color:#1f1f1f !important;
+    transition:all .25s ease !important;
+}
+
+/* ADMIN MENU HOVER */
+.admin-menu a:hover,
+.admin-navbar-menu a:hover,
+.admin-navbar-menu button:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+}
+
+/* ADMIN MENU ACTIVE */
+.admin-menu a.active,
+.admin-navbar-menu a.active{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+
+/* ADMIN LOGO */
+.admin-logo,
+.admin-navbar-brand{
+    color:#1f1f1f !important;
+}
+
+/* MOBILE NAVBAR */
+@media(max-width:900px){
+    .navbar,
+    .navbar-premium{
+        background:#f7c8d8 !important;
+    }
+
+    .navbar-menu a,
+    .navbar__links a,
+    .navbar-menu a:hover,
+    .navbar__links a:hover{
+        color:#1f1f1f !important;
+    }
+}
+/* =====================================
+   FINAL FIX BOOK NOW HOVER
+   Font Book Now tetap hitam saat hover
+===================================== */
+
+.nav-book-btn,
+a.nav-book-btn,
+button.nav-book-btn{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    border:none !important;
+    box-shadow:0 8px 18px rgba(255,255,255,.35) !important;
+}
+
+/* HOVER BOOK NOW */
+.nav-book-btn:hover,
+a.nav-book-btn:hover,
+button.nav-book-btn:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    opacity:1 !important;
+    box-shadow:0 12px 24px rgba(255,255,255,.45) !important;
+}
+
+/* Jika tombol Book Now memakai class btn-pesan */
+.btn-pesan:hover,
+a.btn-pesan:hover,
+button.btn-pesan:hover{
+    color:#1f1f1f !important;
+}
+
+/* Jika tombol Book Now memakai class btn-booking */
+.btn-booking:hover,
+a.btn-booking:hover,
+button.btn-booking:hover{
+    color:#1f1f1f !important;
+}
+
+/* Jika tombol Book Now berada di navbar premium */
+.navbar-premium .nav-book-btn:hover,
+.navbar-premium .btn-pesan:hover,
+.navbar-premium .btn-booking:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+}
+/* =====================================
+   BOOK NOW HOVER FIX
+   Hover putih, font tetap hitam
+===================================== */
+
+.nav-book-btn,
+a.nav-book-btn,
+button.nav-book-btn{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    border:none !important;
+    box-shadow:0 8px 18px rgba(255,255,255,.35) !important;
+    transition:all .25s ease !important;
+}
+
+/* HOVER BOOK NOW */
+.nav-book-btn:hover,
+a.nav-book-btn:hover,
+button.nav-book-btn:hover{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px);
+    opacity:1 !important;
+    box-shadow:0 12px 24px rgba(255,255,255,.45) !important;
+}
