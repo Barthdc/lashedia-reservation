@@ -2,6 +2,12 @@
 
 @section('content')
 
+{{-- LEAFLET CSS --}}
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
 <style>
     body{
         background:#f5f5f7;
@@ -18,7 +24,7 @@
 
     .booking-card{
         width:100%;
-        max-width:620px;
+        max-width:720px;
         background:white;
         border-radius:18px;
         padding:42px;
@@ -97,6 +103,12 @@
         box-shadow:0 14px 30px rgba(247,200,216,.48);
     }
 
+    .btn-small{
+        width:auto;
+        padding:13px 22px;
+        white-space:nowrap;
+    }
+
     .payment-info{
         background:#fff7fb;
         border:1px solid #ffe0ea;
@@ -168,8 +180,41 @@
         font-family:'Playfair Display', serif;
     }
 
+    .leaflet-map-box{
+        width:100%;
+        height:380px;
+        border-radius:18px;
+        overflow:hidden;
+        margin-bottom:18px;
+        border:2px solid #f7c8d8;
+        box-shadow:0 12px 28px rgba(247,200,216,.18);
+    }
+
+    .location-info-box,
+    .location-result-box{
+        background:#fff7fb;
+        border:1px solid #ffe0ea;
+        color:#4b4453;
+        padding:14px 16px;
+        border-radius:14px;
+        margin-bottom:18px;
+        font-size:14px;
+        line-height:1.7;
+    }
+
+    .location-search-row{
+        display:flex;
+        gap:10px;
+        align-items:center;
+        margin-bottom:14px;
+    }
+
+    .location-search-row .form-control{
+        flex:1;
+    }
+
     .location-button{
-        margin-top:12px;
+        margin-bottom:18px;
         background:#4b4453;
         color:white;
     }
@@ -179,6 +224,30 @@
         color:white;
     }
 
+    .map-help{
+        font-size:13px;
+        color:#6b7280;
+        line-height:1.7;
+        margin-bottom:14px;
+    }
+
+    .transport-price-box{
+        background:#f7c8d8;
+        border:2px solid #1f1f1f;
+        border-radius:18px;
+        padding:18px;
+        margin-bottom:22px;
+        color:#1f1f1f;
+        line-height:1.8;
+        font-size:15px;
+        font-weight:700;
+        box-shadow:0 12px 28px rgba(247,200,216,.28);
+    }
+
+    .transport-price-box strong{
+        font-weight:900;
+    }
+
     @media(max-width:768px){
         .booking-card{
             padding:30px 22px;
@@ -186,6 +255,18 @@
 
         .booking-title{
             font-size:32px;
+        }
+
+        .leaflet-map-box{
+            height:320px;
+        }
+
+        .location-search-row{
+            flex-direction:column;
+        }
+
+        .btn-small{
+            width:100%;
         }
     }
 </style>
@@ -200,7 +281,7 @@
 
         <p class="booking-subtitle">
             Isi formulir di bawah ini untuk memesan penata rias Anda.
-            Kami akan segera menghubungi Anda.
+            Lokasi pelanggan dapat diketik manual atau dipilih langsung melalui peta.
         </p>
 
         {{-- GOOGLE CALENDAR ADMIN --}}
@@ -266,7 +347,6 @@
 
             {{-- TANGGAL --}}
             <div class="form-group">
-
                 <label>Tanggal Booking</label>
 
                 <input
@@ -277,12 +357,10 @@
                     value="{{ old('date') }}"
                     required
                 >
-
             </div>
 
             {{-- JAM --}}
             <div class="form-group">
-
                 <label>Jam Booking</label>
 
                 <input
@@ -293,12 +371,10 @@
                     value="{{ old('time') }}"
                     required
                 >
-
             </div>
 
             {{-- PENATA RIAS --}}
             <div class="form-group">
-
                 <label>Penata Rias</label>
 
                 <select
@@ -307,10 +383,7 @@
                     id="bookingStylist"
                     required
                 >
-
-                    <option value="">
-                        Pilih Penata Rias
-                    </option>
+                    <option value="">Pilih Penata Rias</option>
 
                     <option value="Bernike Ledibeth" {{ old('stylist') === 'Bernike Ledibeth' ? 'selected' : '' }}>
                         Bernike Ledibeth
@@ -323,14 +396,11 @@
                     <option value="Kiki" {{ old('stylist') === 'Kiki' ? 'selected' : '' }}>
                         Kiki
                     </option>
-
                 </select>
-
             </div>
 
             {{-- LAYANAN --}}
             <div class="form-group">
-
                 <label>Layanan</label>
 
                 <select
@@ -339,10 +409,7 @@
                     id="bookingService"
                     required
                 >
-
-                    <option value="">
-                        Pilih sebuah layanan
-                    </option>
+                    <option value="">Pilih sebuah layanan</option>
 
                     <option value="Wedding Makeup" {{ old('service') === 'Wedding Makeup' ? 'selected' : '' }}>
                         Wedding Makeup
@@ -363,9 +430,7 @@
                     <option value="Hair Do" {{ old('service') === 'Hair Do' ? 'selected' : '' }}>
                         Hair Do
                     </option>
-
                 </select>
-
             </div>
 
             <div class="section-title">
@@ -374,7 +439,6 @@
 
             {{-- NAMA --}}
             <div class="form-group">
-
                 <label>Nama Lengkap</label>
 
                 <input
@@ -385,12 +449,10 @@
                     value="{{ old('name') }}"
                     required
                 >
-
             </div>
 
             {{-- EMAIL --}}
             <div class="form-group">
-
                 <label>Alamat Email</label>
 
                 <input
@@ -401,12 +463,10 @@
                     value="{{ old('email') }}"
                     required
                 >
-
             </div>
 
             {{-- PHONE --}}
             <div class="form-group">
-
                 <label>Nomor Telepon (WhatsApp)</label>
 
                 <input
@@ -417,202 +477,82 @@
                     value="{{ old('phone') }}"
                     required
                 >
-
             </div>
 
             <div class="section-title">
                 Mapping Lokasi Pelanggan
             </div>
 
-            {{-- ALAMAT --}}
-            <div class="form-group">
-
-                <label>Alamat Lengkap</label>
-
-                <textarea
-                    class="form-control"
-                    name="full_address"
-                    placeholder="Masukkan alamat lengkap pelanggan..."
-                    required
-                >{{ old('full_address') }}</textarea>
-
+            <div class="location-info-box">
+                Ketik alamat pada kolom pencarian lalu klik <strong>Cari Lokasi</strong>.
+                Map akan otomatis membaca alamat tersebut, memindahkan marker ke titik lokasi, lalu menampilkan jarak dan harga transport untuk user.
             </div>
 
-            {{-- DESA --}}
+            {{-- INPUT MANUAL ALAMAT --}}
             <div class="form-group">
+                <label>Input Alamat / Nama Lokasi</label>
 
-                <label>Desa / Kelurahan</label>
+                <div class="location-search-row">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="manualAddressInput"
+                        placeholder="Contoh: Pasar Kemis, Kabupaten Tangerang"
+                        value="{{ old('full_address') }}"
+                    >
 
-                <input
-                    type="text"
-                    class="form-control"
-                    name="village"
-                    placeholder="Contoh: Sukamantri"
-                    value="{{ old('village') }}"
-                    required
-                >
+                    <button
+                        type="button"
+                        class="btn-booking btn-small"
+                        onclick="searchManualAddress()"
+                    >
+                        Cari Lokasi
+                    </button>
+                </div>
 
+                <div class="map-help">
+                    Setelah lokasi ditemukan, marker pada peta akan berpindah otomatis. Anda juga tetap bisa klik peta atau drag marker untuk memperbaiki titik.
+                </div>
             </div>
 
-            {{-- KECAMATAN --}}
-            <div class="form-group">
+            <div id="map" class="leaflet-map-box"></div>
 
-                <label>Kecamatan</label>
+            <button
+                type="button"
+                class="btn-booking location-button"
+                onclick="useCurrentLocation()"
+            >
+                Gunakan Lokasi Saya
+            </button>
 
-                <input
-                    type="text"
-                    class="form-control"
-                    name="district"
-                    placeholder="Contoh: Pasar Kemis"
-                    value="{{ old('district') }}"
-                    required
-                >
-
+            <div class="location-result-box" id="locationResult">
+                Lokasi belum dipilih.
             </div>
 
-            {{-- KOTA --}}
-            <div class="form-group">
-
-                <label>Kota / Kabupaten</label>
-
-                <input
-                    type="text"
-                    class="form-control"
-                    name="city"
-                    id="cityInput"
-                    placeholder="Contoh: Kabupaten Tangerang"
-                    value="{{ old('city') }}"
-                    required
-                >
-
+            <div class="transport-price-box" id="transportInfo">
+                Harga transport akan tampil setelah lokasi dipilih atau alamat dicari.
             </div>
 
-            {{-- PROVINSI --}}
-            <div class="form-group">
-
-                <label>Provinsi</label>
-
-                <input
-                    type="text"
-                    class="form-control"
-                    name="province"
-                    id="provinceInput"
-                    placeholder="Contoh: Banten"
-                    value="{{ old('province') }}"
-                    required
-                >
-
-            </div>
-
-            {{-- PULAU --}}
-            <div class="form-group">
-
-                <label>Pulau</label>
-
-                <select
-                    class="form-control"
-                    name="island"
-                    id="islandInput"
-                    required
-                >
-                    <option value="">Pilih Pulau</option>
-
-                    <option value="Jawa" {{ old('island') === 'Jawa' ? 'selected' : '' }}>
-                        Jawa
-                    </option>
-
-                    <option value="Sumatera" {{ old('island') === 'Sumatera' ? 'selected' : '' }}>
-                        Sumatera
-                    </option>
-
-                    <option value="Kalimantan" {{ old('island') === 'Kalimantan' ? 'selected' : '' }}>
-                        Kalimantan
-                    </option>
-
-                    <option value="Sulawesi" {{ old('island') === 'Sulawesi' ? 'selected' : '' }}>
-                        Sulawesi
-                    </option>
-
-                    <option value="Bali" {{ old('island') === 'Bali' ? 'selected' : '' }}>
-                        Bali
-                    </option>
-
-                    <option value="Nusa Tenggara" {{ old('island') === 'Nusa Tenggara' ? 'selected' : '' }}>
-                        Nusa Tenggara
-                    </option>
-
-                    <option value="Maluku" {{ old('island') === 'Maluku' ? 'selected' : '' }}>
-                        Maluku
-                    </option>
-
-                    <option value="Papua" {{ old('island') === 'Papua' ? 'selected' : '' }}>
-                        Papua
-                    </option>
-
-                </select>
-
-            </div>
-
-            {{-- TIKET PESAWAT --}}
-            <div
-                class="form-group"
-                id="flightTicketBox"
-                style="display:none;"
+            <input
+                type="hidden"
+                name="full_address"
+                id="fullAddressInput"
+                value="{{ old('full_address') }}"
             >
 
-                <label>Estimasi Tiket Pesawat</label>
+            <input
+                type="hidden"
+                name="latitude"
+                id="latitudeInput"
+                value="{{ old('latitude') }}"
+            >
 
-                <input
-                    type="number"
-                    class="form-control"
-                    name="flight_ticket_cost"
-                    id="flightTicketInput"
-                    placeholder="Contoh: 1500000"
-                    value="{{ old('flight_ticket_cost', 0) }}"
-                >
-
-            </div>
-
-            {{-- KOORDINAT --}}
-            <div class="form-group">
-
-                <label>Koordinat Lokasi</label>
-
-                <input
-                    type="text"
-                    class="form-control"
-                    name="latitude"
-                    id="latitudeInput"
-                    placeholder="Latitude"
-                    value="{{ old('latitude') }}"
-                    readonly
-                    style="margin-bottom:10px;"
-                >
-
-                <input
-                    type="text"
-                    class="form-control"
-                    name="longitude"
-                    id="longitudeInput"
-                    placeholder="Longitude"
-                    value="{{ old('longitude') }}"
-                    readonly
-                >
-
-                <button
-                    type="button"
-                    class="btn-booking location-button"
-                    onclick="getCustomerLocation()"
-                >
-                    Ambil Titik Lokasi Saya
-                </button>
-
-            </div>
-
-            {{-- INFO ONGKIR --}}
-            <div class="payment-info" id="shippingInfo">
-                Ongkir akan dihitung otomatis berdasarkan kota, provinsi, dan pulau pelanggan.
-            </div>
+            <input
+                type="hidden"
+                name="longitude"
+                id="longitudeInput"
+                value="{{ old('longitude') }}"
+            >
 
             <div class="section-title">
                 Pembayaran
@@ -620,7 +560,6 @@
 
             {{-- PEMBAYARAN --}}
             <div class="form-group">
-
                 <label>Metode Pembayaran</label>
 
                 <select
@@ -629,10 +568,7 @@
                     id="metodePembayaran"
                     onchange="toggleBuktiPembayaran()"
                 >
-
-                    <option value="">
-                        Pilih metode pembayaran
-                    </option>
+                    <option value="">Pilih metode pembayaran</option>
 
                     <option value="cash" {{ old('payment_method') === 'cash' ? 'selected' : '' }}>
                         Cash
@@ -645,9 +581,7 @@
                     <option value="ewallet" {{ old('payment_method') === 'ewallet' ? 'selected' : '' }}>
                         E-Wallet
                     </option>
-
                 </select>
-
             </div>
 
             {{-- INFO CASH --}}
@@ -666,7 +600,6 @@
                 id="paymentProofBox"
                 style="display:none;"
             >
-
                 <label>Upload Bukti Pembayaran</label>
 
                 <input
@@ -675,12 +608,10 @@
                     class="form-control"
                     accept="image/*"
                 >
-
             </div>
 
             {{-- CATATAN --}}
             <div class="form-group">
-
                 <label>Catatan Tambahan</label>
 
                 <textarea
@@ -688,7 +619,6 @@
                     name="note"
                     placeholder="Tambahkan catatan booking..."
                 >{{ old('note') }}</textarea>
-
             </div>
 
             <button type="submit" class="btn-booking">
@@ -701,6 +631,9 @@
 
 </div>
 
+{{-- LEAFLET JS --}}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
     const blockedWeddingDates = @json($blockedWeddingDates ?? []);
     const timeBlocks = @json($timeBlocks ?? []);
@@ -712,12 +645,19 @@
     const bookingStylist = document.getElementById('bookingStylist');
     const scheduleWarning = document.getElementById('scheduleWarning');
 
-    const cityInput = document.getElementById('cityInput');
-    const provinceInput = document.getElementById('provinceInput');
-    const islandInput = document.getElementById('islandInput');
-    const flightTicketBox = document.getElementById('flightTicketBox');
-    const flightTicketInput = document.getElementById('flightTicketInput');
-    const shippingInfo = document.getElementById('shippingInfo');
+    const manualAddressInput = document.getElementById('manualAddressInput');
+    const locationResult = document.getElementById('locationResult');
+    const transportInfo = document.getElementById('transportInfo');
+
+    const fullAddressInput = document.getElementById('fullAddressInput');
+    const latitudeInput = document.getElementById('latitudeInput');
+    const longitudeInput = document.getElementById('longitudeInput');
+
+    const muaLat = {{ env('MUA_LATITUDE', -6.170170) }};
+    const muaLng = {{ env('MUA_LONGITUDE', 106.640300) }};
+
+    let map;
+    let customerMarker;
 
     function timeToMinutes(time){
         if(!time){
@@ -794,77 +734,95 @@
         return true;
     }
 
-    function formatRupiah(number){
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(number);
+    function initMap(){
+        map = L.map('map').setView([muaLat, muaLng], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom:19,
+            attribution:'&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([muaLat, muaLng])
+            .addTo(map)
+            .bindPopup('Lokasi MUA Lashedia')
+            .openPopup();
+
+        customerMarker = L.marker([muaLat, muaLng], {
+            draggable:true
+        }).addTo(map);
+
+        customerMarker.bindPopup('Geser marker ini ke lokasi pelanggan.');
+
+        customerMarker.on('dragend', function(){
+            const position = customerMarker.getLatLng();
+            setCustomerLocation(position.lat, position.lng, null, true);
+        });
+
+        map.on('click', function(e){
+            customerMarker.setLatLng(e.latlng);
+            setCustomerLocation(e.latlng.lat, e.latlng.lng, null, true);
+        });
+
+        if(latitudeInput.value && longitudeInput.value){
+            const oldLat = parseFloat(latitudeInput.value);
+            const oldLng = parseFloat(longitudeInput.value);
+
+            map.setView([oldLat, oldLng], 16);
+            customerMarker.setLatLng([oldLat, oldLng]);
+            setCustomerLocation(oldLat, oldLng, fullAddressInput.value, false);
+        }
     }
 
-    function calculateShippingCost(){
-        const city = (cityInput.value || '').toLowerCase().trim();
-        const province = (provinceInput.value || '').toLowerCase().trim();
-        const island = (islandInput.value || '').toLowerCase().trim();
-        const flightTicket = parseInt(flightTicketInput.value || 0);
+    function searchManualAddress(){
+        const query = manualAddressInput.value.trim();
 
-        const jabodetabekCities = [
-            'jakarta',
-            'jakarta pusat',
-            'jakarta barat',
-            'jakarta timur',
-            'jakarta utara',
-            'jakarta selatan',
-            'bogor',
-            'kota bogor',
-            'kabupaten bogor',
-            'depok',
-            'kota depok',
-            'tangerang',
-            'kota tangerang',
-            'kabupaten tangerang',
-            'tangerang selatan',
-            'kota tangerang selatan',
-            'bekasi',
-            'kota bekasi',
-            'kabupaten bekasi'
-        ];
-
-        let zone = '';
-        let shippingCost = 0;
-        let totalCost = 0;
-
-        if(island && island !== 'jawa'){
-            zone = 'Luar Pulau';
-            shippingCost = 800000;
-            totalCost = shippingCost + flightTicket;
-
-            flightTicketBox.style.display = 'block';
-        }else{
-            flightTicketBox.style.display = 'none';
-
-            if(province && province !== 'banten'){
-                zone = 'Luar Provinsi Banten';
-                shippingCost = 400000;
-            }else if(jabodetabekCities.includes(city)){
-                zone = 'Jabodetabek';
-                shippingCost = 100000;
-            }else{
-                zone = 'Luar Jabodetabek';
-                shippingCost = 200000;
-            }
-
-            totalCost = shippingCost;
+        if(!query){
+            alert('Masukkan alamat terlebih dahulu.');
+            return;
         }
 
-        shippingInfo.innerHTML =
-            '<strong>Zona:</strong> ' + zone + '<br>' +
-            '<strong>Ongkir:</strong> ' + formatRupiah(shippingCost) + '<br>' +
-            '<strong>Tiket Pesawat:</strong> ' + formatRupiah(flightTicket) + '<br>' +
-            '<strong>Total Biaya Lokasi:</strong> ' + formatRupiah(totalCost);
+        locationResult.innerHTML = 'Mencari lokasi dari alamat yang dimasukkan...';
+
+        const url =
+            'https://nominatim.openstreetmap.org/search' +
+            '?format=json' +
+            '&limit=1' +
+            '&countrycodes=id' +
+            '&addressdetails=1' +
+            '&q=' + encodeURIComponent(query);
+
+        fetch(url, {
+            headers:{
+                'Accept':'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(results => {
+            if(!results || results.length === 0){
+                locationResult.innerHTML = 'Lokasi tidak ditemukan. Coba tulis alamat lebih lengkap.';
+                alert('Lokasi tidak ditemukan. Coba masukkan alamat yang lebih lengkap.');
+                return;
+            }
+
+            const place = results[0];
+
+            const lat = parseFloat(place.lat);
+            const lng = parseFloat(place.lon);
+            const address = place.display_name || query;
+
+            map.setView([lat, lng], 17);
+            customerMarker.setLatLng([lat, lng]);
+            customerMarker.bindPopup('Lokasi pelanggan').openPopup();
+
+            setCustomerLocation(lat, lng, address, false);
+        })
+        .catch(() => {
+            locationResult.innerHTML = 'Gagal mencari lokasi. Periksa koneksi internet.';
+            alert('Gagal mencari lokasi. Periksa koneksi internet.');
+        });
     }
 
-    function getCustomerLocation(){
+    function useCurrentLocation(){
         if(!navigator.geolocation){
             alert('Browser tidak mendukung fitur lokasi.');
             return;
@@ -872,18 +830,140 @@
 
         navigator.geolocation.getCurrentPosition(
             function(position){
-                document.getElementById('latitudeInput').value =
-                    position.coords.latitude.toFixed(7);
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
 
-                document.getElementById('longitudeInput').value =
-                    position.coords.longitude.toFixed(7);
+                map.setView([lat, lng], 17);
+                customerMarker.setLatLng([lat, lng]);
+                customerMarker.bindPopup('Lokasi pelanggan').openPopup();
 
-                alert('Titik lokasi berhasil diambil.');
+                setCustomerLocation(lat, lng, null, true);
             },
             function(){
                 alert('Gagal mengambil lokasi. Pastikan izin lokasi diaktifkan.');
             }
         );
+    }
+
+    function setCustomerLocation(lat, lng, address = null, useReverse = true){
+        latitudeInput.value = lat.toFixed(7);
+        longitudeInput.value = lng.toFixed(7);
+
+        const distanceKm = calculateDistanceKm(muaLat, muaLng, lat, lng);
+        const transport = calculateTransportCost(distanceKm);
+
+        if(address){
+            fullAddressInput.value = address;
+            manualAddressInput.value = address;
+        }else{
+            fullAddressInput.value =
+                'Koordinat pelanggan: ' + lat.toFixed(7) + ', ' + lng.toFixed(7);
+        }
+
+        locationResult.innerHTML =
+            '<strong>Alamat:</strong> ' + (fullAddressInput.value || '-') + '<br>' +
+            '<strong>Latitude:</strong> ' + lat.toFixed(7) + '<br>' +
+            '<strong>Longitude:</strong> ' + lng.toFixed(7) + '<br>' +
+            '<strong>Jarak dari lokasi MUA:</strong> ' + distanceKm + ' km';
+
+        transportInfo.innerHTML =
+            '<strong>Harga Transport:</strong> ' + formatRupiah(transport.cost) + '<br>' +
+            '<strong>Jarak:</strong> ' + distanceKm + ' km<br>' +
+            '<strong>Keterangan:</strong> ' + transport.note;
+
+        if(useReverse){
+            fetch("{{ route('location.reverse') }}", {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json',
+                    'X-CSRF-TOKEN':'{{ csrf_token() }}'
+                },
+                body:JSON.stringify({
+                    latitude:lat,
+                    longitude:lng
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    fullAddressInput.value = data.full_address;
+                    manualAddressInput.value = data.full_address;
+
+                    locationResult.innerHTML =
+                        '<strong>Alamat:</strong> ' + data.full_address + '<br>' +
+                        '<strong>Latitude:</strong> ' + lat.toFixed(7) + '<br>' +
+                        '<strong>Longitude:</strong> ' + lng.toFixed(7) + '<br>' +
+                        '<strong>Jarak dari lokasi MUA:</strong> ' + distanceKm + ' km';
+                }
+            })
+            .catch(() => {
+                console.log('Alamat otomatis gagal, koordinat tetap tersimpan.');
+            });
+        }
+    }
+
+    function calculateDistanceKm(lat1, lon1, lat2, lon2){
+        const earthRadius = 6371;
+
+        const dLat = degToRad(lat2 - lat1);
+        const dLon = degToRad(lon2 - lon1);
+
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return Math.round((earthRadius * c) * 100) / 100;
+    }
+
+    function degToRad(value){
+        return value * Math.PI / 180;
+    }
+
+    function calculateTransportCost(distanceKm){
+        let cost = 0;
+        let note = '';
+
+        if(distanceKm <= 5){
+            cost = 15000;
+            note = 'Jarak 0–5 km';
+        }else if(distanceKm <= 10){
+            cost = 25000;
+            note = 'Jarak 6–10 km';
+        }else if(distanceKm <= 15){
+            cost = 40000;
+            note = 'Jarak 11–15 km';
+        }else if(distanceKm <= 20){
+            cost = 60000;
+            note = 'Jarak 16–20 km';
+        }else if(distanceKm <= 30){
+            cost = 90000;
+            note = 'Jarak 21–30 km';
+        }else if(distanceKm <= 40){
+            cost = 120000;
+            note = 'Jarak 31–40 km';
+        }else{
+            const ratePerKm = 5000;
+            const extraFee = 50000;
+
+            cost = Math.ceil(distanceKm) * ratePerKm + extraFee;
+            note = 'Di atas 40 km, Rp5.000 per km + biaya tambahan';
+        }
+
+        return {
+            cost:cost,
+            note:note
+        };
+    }
+
+    function formatRupiah(number){
+        return new Intl.NumberFormat('id-ID', {
+            style:'currency',
+            currency:'IDR',
+            minimumFractionDigits:0
+        }).format(number);
     }
 
     function toggleBuktiPembayaran(){
@@ -908,23 +988,31 @@
     bookingService.addEventListener('change', validateSchedule);
     bookingStylist.addEventListener('change', validateSchedule);
 
-    cityInput.addEventListener('input', calculateShippingCost);
-    provinceInput.addEventListener('input', calculateShippingCost);
-    islandInput.addEventListener('change', calculateShippingCost);
-    flightTicketInput.addEventListener('input', calculateShippingCost);
+    manualAddressInput.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){
+            e.preventDefault();
+            searchManualAddress();
+        }
+    });
 
     bookingForm.addEventListener('submit', function(e){
-        const valid = validateSchedule();
+        const validSchedule = validateSchedule();
 
-        if(!valid){
+        if(!validSchedule){
             e.preventDefault();
+            return;
+        }
+
+        if(!latitudeInput.value || !longitudeInput.value || !fullAddressInput.value){
+            e.preventDefault();
+            alert('Silakan pilih lokasi pelanggan terlebih dahulu melalui input alamat atau peta.');
         }
     });
 
     window.onload = function(){
         toggleBuktiPembayaran();
         validateSchedule();
-        calculateShippingCost();
+        initMap();
     };
 </script>
 

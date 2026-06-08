@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Gallery;
 use App\Models\Stylist;
@@ -11,27 +12,30 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\PowerBiBookingController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\LocationController;
 
 /*
 |--------------------------------------------------------------------------
-| REDIRECT
+| REDIRECT AWAL
 |--------------------------------------------------------------------------
 */
 
 Route::redirect('/', '/home');
 
+
 /*
 |--------------------------------------------------------------------------
 | REDIRECT SETELAH LOGIN
 |--------------------------------------------------------------------------
-| Admin  -> /admin/dashboard
-| User   -> /home
+| Admin -> /admin/dashboard
+| User  -> /home
 |--------------------------------------------------------------------------
 */
 
 Route::middleware(['auth'])->get('/dashboard', function () {
 
-    if (auth()->user()->role === 'admin') {
+    if (Auth::user() && Auth::user()->role === 'admin') {
         return redirect()->route('admin.dashboard');
     }
 
@@ -113,6 +117,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pesan-sekarang', [BookingController::class, 'store'])
         ->name('pesan.store');
 
+    Route::post('/pesan-sekarang/reverse-location', [LocationController::class, 'reverseGeocode'])
+        ->name('location.reverse');
+
     Route::get('/riwayat', [BookingController::class, 'riwayat'])
         ->name('riwayat');
 
@@ -159,14 +166,9 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
 
-        Route::redirect('/', '/admin/dashboard');
-
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-            ->name('dashboard');
-
         /*
         |--------------------------------------------------------------------------
-        | REDIRECT ADMIN KE DASHBOARD
+        | REDIRECT /admin KE DASHBOARD
         |--------------------------------------------------------------------------
         */
 
@@ -175,12 +177,19 @@ Route::middleware(['auth', 'admin'])
 
         /*
         |--------------------------------------------------------------------------
-        | DASHBOARD ADMIN / POWER BI
+        | DASHBOARD ADMIN
         |--------------------------------------------------------------------------
         */
 
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | POWER BI / CSV BOOKING
+        |--------------------------------------------------------------------------
+        */
 
         Route::get('/powerbi/bookings.csv', [PowerBiBookingController::class, 'bookingsCsv'])
             ->name('powerbi.bookings.csv');

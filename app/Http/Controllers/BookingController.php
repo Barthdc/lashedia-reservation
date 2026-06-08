@@ -81,20 +81,29 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | VALIDASI FORM BOOKING
+        |--------------------------------------------------------------------------
+        */
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
 
+            /*
+            |--------------------------------------------------------------------------
+            | LOKASI LEAFLET
+            |--------------------------------------------------------------------------
+            | Tidak memakai input manual desa/kecamatan/kota/provinsi/pulau.
+            | User memilih titik lokasi dari Leaflet.
+            |--------------------------------------------------------------------------
+            */
+
             'full_address' => 'required',
-            'village' => 'required',
-            'district' => 'required',
-            'city' => 'required',
-            'province' => 'required',
-            'island' => 'required',
-            'latitude' => 'nullable',
-            'longitude' => 'nullable',
-            'flight_ticket_cost' => 'nullable|integer|min:0',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
 
             'service' => 'required',
             'date' => 'required|date',
@@ -191,16 +200,21 @@ class BookingController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | HITUNG ONGKIR LOKASI
+        | HITUNG JARAK DAN BIAYA TRANSPORT DARI LOKASI MUA
         |--------------------------------------------------------------------------
         */
 
-        $locationCost = $this->calculateLocationCost(
-            $request->province,
-            $request->city,
-            $request->island,
-            $request->flight_ticket_cost ?? 0
+        $muaLatitude = env('MUA_LATITUDE', -6.170170);
+        $muaLongitude = env('MUA_LONGITUDE', 106.640300);
+
+        $distanceKm = $this->calculateDistanceKm(
+            $muaLatitude,
+            $muaLongitude,
+            $request->latitude,
+            $request->longitude
         );
+
+        $transport = $this->calculateTransportCost($distanceKm);
 
         /*
         |--------------------------------------------------------------------------
@@ -229,19 +243,27 @@ class BookingController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
 
+            /*
+            |--------------------------------------------------------------------------
+            | DATA LOKASI LEAFLET
+            |--------------------------------------------------------------------------
+            */
+
             'full_address' => $request->full_address,
-            'village' => $request->village,
-            'district' => $request->district,
-            'city' => $request->city,
-            'province' => $request->province,
-            'island' => $request->island,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
 
-            'shipping_zone' => $locationCost['zone'],
-            'shipping_cost' => $locationCost['shipping_cost'],
-            'flight_ticket_cost' => $locationCost['flight_ticket_cost'],
-            'total_location_cost' => $locationCost['total_location_cost'],
+            'mua_latitude' => $muaLatitude,
+            'mua_longitude' => $muaLongitude,
+            'distance_km' => $distanceKm,
+            'transport_cost' => $transport['cost'],
+            'transport_note' => $transport['note'],
+
+            /*
+            |--------------------------------------------------------------------------
+            | DATA BOOKING
+            |--------------------------------------------------------------------------
+            */
 
             'service' => $request->service,
             'date' => $bookingDate,
@@ -276,90 +298,99 @@ class BookingController extends Controller
         );
     }
 
-    private function calculateLocationCost($province, $city, $island, $flightTicketCost = 0)
+    /*
+    |--------------------------------------------------------------------------
+    | HITUNG JARAK DALAM KM
+    |--------------------------------------------------------------------------
+    | Menggunakan rumus Haversine.
+    | Ini menghitung jarak garis lurus dari lokasi MUA ke lokasi customer.
+    |--------------------------------------------------------------------------
+    */
+
+    private function calculateDistanceKm($lat1, $lon1, $lat2, $lon2)
     {
-        $province = strtolower(trim($province ?? ''));
-        $city = strtolower(trim($city ?? ''));
-        $island = strtolower(trim($island ?? ''));
+        $earthRadius = 6371;
 
-        $jabodetabekCities = [
-            'jakarta',
-            'jakarta pusat',
-            'jakarta barat',
-            'jakarta timur',
-            'jakarta utara',
-            'jakarta selatan',
-            'bogor',
-            'kota bogor',
-            'kabupaten bogor',
-            'depok',
-            'kota depok',
-            'tangerang',
-            'kota tangerang',
-            'kabupaten tangerang',
-            'tangerang selatan',
-            'kota tangerang selatan',
-            'bekasi',
-            'kota bekasi',
-            'kabupaten bekasi',
-        ];
+        $lat1 = deg2rad((float) $lat1);
+        $lon1 = deg2rad((float) $lon1);
+        $lat2 = deg2rad((float) $lat2);
+        $lon2 = deg2rad((float) $lon2);
 
-        /*
-        |--------------------------------------------------------------------------
-        | PRIORITAS 1: LUAR PULAU
-        |--------------------------------------------------------------------------
-        */
+        $latDelta = $lat2 - $lat1;
+        $lonDelta = $lon2 - $lon1;
 
-        if ($island !== '' && $island !== 'jawa') {
+        $a = sin($latDelta / 2) * sin($latDelta / 2) +
+            cos($lat1) * cos($lat2) *
+            sin($lonDelta / 2) * sin($lonDelta / 2);
+
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        return round($earthRadius * $c, 2);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | HITUNG BIAYA TRANSPORT BERDASARKAN TABEL JARAK
+    |--------------------------------------------------------------------------
+    */
+
+    private function calculateTransportCost($distanceKm)
+    {
+        $distanceKm = (float) $distanceKm;
+
+        if ($distanceKm <= 5) {
             return [
-                'zone' => 'Luar Pulau',
-                'shipping_cost' => 800000,
-                'flight_ticket_cost' => (int) $flightTicketCost,
-                'total_location_cost' => 800000 + (int) $flightTicketCost,
+                'cost' => 15000,
+                'note' => 'Jarak 0–5 km',
             ];
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | PRIORITAS 2: LUAR PROVINSI BANTEN
-        |--------------------------------------------------------------------------
-        */
-
-        if ($province !== '' && $province !== 'banten') {
+        if ($distanceKm <= 10) {
             return [
-                'zone' => 'Luar Provinsi Banten',
-                'shipping_cost' => 400000,
-                'flight_ticket_cost' => 0,
-                'total_location_cost' => 400000,
+                'cost' => 25000,
+                'note' => 'Jarak 6–10 km',
             ];
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | PRIORITAS 3: JABODETABEK
-        |--------------------------------------------------------------------------
-        */
-
-        if (in_array($city, $jabodetabekCities)) {
+        if ($distanceKm <= 15) {
             return [
-                'zone' => 'Jabodetabek',
-                'shipping_cost' => 100000,
-                'flight_ticket_cost' => 0,
-                'total_location_cost' => 100000,
+                'cost' => 40000,
+                'note' => 'Jarak 11–15 km',
             ];
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | DEFAULT: LUAR JABODETABEK
-        |--------------------------------------------------------------------------
-        */
+        if ($distanceKm <= 20) {
+            return [
+                'cost' => 60000,
+                'note' => 'Jarak 16–20 km',
+            ];
+        }
+
+        if ($distanceKm <= 30) {
+            return [
+                'cost' => 90000,
+                'note' => 'Jarak 21–30 km',
+            ];
+        }
+
+        if ($distanceKm <= 40) {
+            return [
+                'cost' => 120000,
+                'note' => 'Jarak 31–40 km',
+            ];
+        }
+
+        $ratePerKm = (int) env('LONG_DISTANCE_RATE_PER_KM', 5000);
+        $extraFee = (int) env('LONG_DISTANCE_EXTRA_FEE', 50000);
+
+        $cost = ceil($distanceKm) * $ratePerKm + $extraFee;
 
         return [
-            'zone' => 'Luar Jabodetabek',
-            'shipping_cost' => 200000,
-            'flight_ticket_cost' => 0,
-            'total_location_cost' => 200000,
+            'cost' => $cost,
+            'note' => 'Jarak di atas 40 km. Biaya dihitung Rp' .
+                number_format($ratePerKm, 0, ',', '.') .
+                ' per km + biaya tambahan Rp' .
+                number_format($extraFee, 0, ',', '.'),
         ];
     }
 

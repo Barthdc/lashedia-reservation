@@ -114,77 +114,51 @@
                 {{-- LOKASI PELANGGAN --}}
                 <div class="booking-location-info">
 
-                    <h4>Lokasi Pelanggan</h4>
+    <h4>Lokasi & Transport Pelanggan</h4>
 
-                    <p>
-                        <strong>Alamat Lengkap:</strong>
-                        {{ $booking->full_address ?? '-' }}
-                    </p>
+    <p>
+        <strong>Alamat / Titik Lokasi:</strong>
+        {{ $booking->full_address ?? '-' }}
+    </p>
 
-                    <p>
-                        <strong>Desa/Kelurahan:</strong>
-                        {{ $booking->village ?? '-' }}
-                    </p>
+    <p>
+        <strong>Koordinat Pelanggan:</strong>
+        {{ $booking->latitude ?? '-' }},
+        {{ $booking->longitude ?? '-' }}
+    </p>
 
-                    <p>
-                        <strong>Kecamatan:</strong>
-                        {{ $booking->district ?? '-' }}
-                    </p>
+    <p>
+        <strong>Koordinat MUA:</strong>
+        {{ $booking->mua_latitude ?? '-' }},
+        {{ $booking->mua_longitude ?? '-' }}
+    </p>
 
-                    <p>
-                        <strong>Kota/Kabupaten:</strong>
-                        {{ $booking->city ?? '-' }}
-                    </p>
+    <p>
+        <strong>Jarak dari Lokasi MUA:</strong>
+        {{ $booking->distance_km ?? 0 }} km
+    </p>
 
-                    <p>
-                        <strong>Provinsi:</strong>
-                        {{ $booking->province ?? '-' }}
-                    </p>
+    <p>
+        <strong>Biaya Transport:</strong>
+        Rp{{ number_format($booking->transport_cost ?? 0, 0, ',', '.') }}
+    </p>
 
-                    <p>
-                        <strong>Pulau:</strong>
-                        {{ $booking->island ?? '-' }}
-                    </p>
+    <p>
+        <strong>Keterangan:</strong>
+        {{ $booking->transport_note ?? '-' }}
+    </p>
 
-                    <p>
-                        <strong>Koordinat:</strong>
-                        {{ $booking->latitude ?? '-' }},
-                        {{ $booking->longitude ?? '-' }}
-                    </p>
+    @if($booking->latitude && $booking->longitude)
+        <a
+            href="https://www.google.com/maps?q={{ $booking->latitude }},{{ $booking->longitude }}"
+            target="_blank"
+            class="btn-location-map"
+        >
+            Lihat Lokasi Pelanggan
+        </a>
+    @endif
 
-                    <p>
-                        <strong>Zona Ongkir:</strong>
-                        {{ $booking->shipping_zone ?? '-' }}
-                    </p>
-
-                    <p>
-                        <strong>Ongkir:</strong>
-                        Rp{{ number_format($booking->shipping_cost ?? 0, 0, ',', '.') }}
-                    </p>
-
-                    <p>
-                        <strong>Tiket Pesawat:</strong>
-                        Rp{{ number_format($booking->flight_ticket_cost ?? 0, 0, ',', '.') }}
-                    </p>
-
-                    <p>
-                        <strong>Total Biaya Lokasi:</strong>
-                        Rp{{ number_format($booking->total_location_cost ?? 0, 0, ',', '.') }}
-                    </p>
-
-                    @if($booking->latitude && $booking->longitude)
-
-                        <a
-                            href="https://www.google.com/maps?q={{ $booking->latitude }},{{ $booking->longitude }}"
-                            target="_blank"
-                            class="btn-location-map"
-                        >
-                            Lihat Lokasi di Maps
-                        </a>
-
-                    @endif
-
-                </div>
+</div>
 
                 @if($booking->reject_reason)
 

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
 
@@ -14,17 +17,13 @@ class Booking extends Model
         'phone',
 
         'full_address',
-        'village',
-        'district',
-        'city',
-        'province',
-        'island',
         'latitude',
         'longitude',
-        'shipping_zone',
-        'shipping_cost',
-        'flight_ticket_cost',
-        'total_location_cost',
+        'mua_latitude',
+        'mua_longitude',
+        'distance_km',
+        'transport_cost',
+        'transport_note',
 
         'service',
         'date',
@@ -34,5 +33,6 @@ class Booking extends Model
         'payment_method',
         'payment_proof',
         'status',
+        'reject_reason',
     ];
 }
