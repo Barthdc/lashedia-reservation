@@ -13,70 +13,39 @@ class AdminDashboardController extends Controller
     {
         $period = $request->get('period', 'today');
 
-        [$labelPeriod, $startDate, $endDate, $previousStartDate, $previousEndDate] =
-            $this->periodRange($period);
+        [$labelPeriod, $startDate, $endDate] = $this->getPeriodRange($period);
 
-        $bookingQuery = Booking::query();
+        $query = Booking::query();
 
         if ($period !== 'all') {
-            $bookingQuery->whereBetween('date', [
+            $query->whereBetween('date', [
                 $startDate->format('Y-m-d'),
                 $endDate->format('Y-m-d'),
             ]);
         }
 
-        $bookings = $bookingQuery
-            ->latest()
-            ->get()
-            ->map(function ($booking) {
-                $booking->dashboard_total = $this->bookingRevenue($booking);
-                return $booking;
-            });
+        $bookings = $query->latest()->get();
 
-        $previousBookingQuery = Booking::query();
+        $bookings = $bookings->map(function ($booking) {
+            $booking->dashboard_total = $this->getBookingRevenue($booking);
+            return $booking;
+        });
 
-        if ($period !== 'all') {
-            $previousBookingQuery->whereBetween('date', [
-                $previousStartDate->format('Y-m-d'),
-                $previousEndDate->format('Y-m-d'),
-            ]);
-        }
-
-        $previousBookings = $previousBookingQuery
-            ->get()
-            ->map(function ($booking) {
-                $booking->dashboard_total = $this->bookingRevenue($booking);
-                return $booking;
-            });
-
-        $totalOrders = $bookings->count();
-        $unitsSold = $bookings->count();
-
-        $approvedCount = $bookings->where('status', 'Approved')->count();
-        $pendingCount = $bookings->where('status', 'Pending')->count();
-        $rejectedCount = $bookings->where('status', 'Rejected')->count();
+        $totalBookings = $bookings->count();
+        $pendingBookings = $bookings->where('status', 'Pending')->count();
+        $approvedBookings = $bookings->where('status', 'Approved')->count();
+        $rejectedBookings = $bookings->where('status', 'Rejected')->count();
 
         $totalRevenue = $bookings
             ->where('status', 'Approved')
             ->sum('dashboard_total');
 
-        $previousOrders = $previousBookings->count();
+        $latestBookings = $bookings->take(8)->values();
 
-        $previousRevenue = $previousBookings
-            ->where('status', 'Approved')
-            ->sum('dashboard_total');
-
-        $ordersChange = $this->percentageChange($totalOrders, $previousOrders);
-        $revenueChange = $this->percentageChange($totalRevenue, $previousRevenue);
-
-        $bookingHealth = $totalOrders > 0
-            ? round(($approvedCount / $totalOrders) * 100, 1)
-            : 0;
-
-        $topServices = $bookings
+        $serviceStats = $bookings
             ->groupBy('service')
             ->map(function ($items, $service) {
-                return [
+                return (object) [
                     'service' => $service ?: 'Tidak Diketahui',
                     'total' => $items->count(),
                     'revenue' => $items->where('status', 'Approved')->sum('dashboard_total'),
@@ -85,65 +54,88 @@ class AdminDashboardController extends Controller
             ->sortByDesc('total')
             ->values();
 
-        $categoryContribution = $topServices->map(function ($item) use ($unitsSold) {
-            $item['percentage'] = $unitsSold > 0
-                ? round(($item['total'] / $unitsSold) * 100, 1)
-                : 0;
+        $maxServiceTotal = max($serviceStats->max('total') ?? 1, 1);
 
-            return $item;
-        });
+        $statusStats = collect([
+            (object) [
+                'label' => 'Pending',
+                'total' => $pendingBookings,
+            ],
+            (object) [
+                'label' => 'Approved',
+                'total' => $approvedBookings,
+            ],
+            (object) [
+                'label' => 'Rejected',
+                'total' => $rejectedBookings,
+            ],
+        ]);
 
-        $salesTrend = $this->salesTrend($bookings, $period);
-        $heatmap = $this->heatmap($bookings);
-        $quadrantData = $this->quadrantData($bookings);
+        $maxStatusTotal = max($statusStats->max('total') ?? 1, 1);
 
-        $recentBookings = $bookings->take(6)->values();
+        $stylistStats = $bookings
+            ->whereNotNull('stylist')
+            ->where('stylist', '!=', '')
+            ->groupBy('stylist')
+            ->map(function ($items, $stylist) {
+                return (object) [
+                    'stylist' => $stylist ?: 'Tidak Diketahui',
+                    'total' => $items->count(),
+                ];
+            })
+            ->sortByDesc('total')
+            ->values();
 
-        $bestService = $topServices->first()['service'] ?? '-';
-        $topRevenue = $topServices->max('revenue') ?? 0;
+        $maxStylistTotal = max($stylistStats->max('total') ?? 1, 1);
 
-        $categoryLabels = $categoryContribution->pluck('service')->values();
-        $categoryValues = $categoryContribution->pluck('total')->values();
+        $bookingHealth = $totalBookings > 0
+            ? round(($approvedBookings / $totalBookings) * 100, 1)
+            : 0;
 
-        $quadrantChartData = $quadrantData->map(function ($item) {
-            $orders = (int) $item['orders'];
-            $revenue = (int) $item['revenue'];
+        $salesTrend = $this->getSalesTrend($bookings, $period);
+
+        $categoryLabels = $serviceStats->pluck('service')->values();
+        $categoryValues = $serviceStats->pluck('total')->values();
+
+        $quadrantChartData = $serviceStats->map(function ($item) {
+            $orders = (int) $item->total;
+            $revenue = (int) $item->revenue;
 
             return [
                 'x' => $orders,
                 'y' => $revenue,
                 'r' => max(8, min(28, $orders * 3)),
-                'service' => $item['service'],
+                'service' => $item->service,
             ];
         })->values();
+
+        $powerBiEmbedUrl = env('POWER_BI_EMBED_URL');
 
         return view('admin.dashboard', compact(
             'period',
             'labelPeriod',
-            'totalOrders',
-            'unitsSold',
+            'totalBookings',
+            'pendingBookings',
+            'approvedBookings',
+            'rejectedBookings',
+            'latestBookings',
+            'serviceStats',
+            'maxServiceTotal',
+            'statusStats',
+            'maxStatusTotal',
+            'stylistStats',
+            'maxStylistTotal',
             'totalRevenue',
-            'approvedCount',
-            'pendingCount',
-            'rejectedCount',
-            'ordersChange',
-            'revenueChange',
             'bookingHealth',
-            'topServices',
-            'categoryContribution',
             'salesTrend',
-            'heatmap',
-            'recentBookings',
-            'quadrantData',
-            'bestService',
-            'topRevenue',
             'categoryLabels',
             'categoryValues',
-            'quadrantChartData'
+            'quadrantChartData',
+            'powerBiEmbedUrl'
         ));
     }
 
-    private function periodRange($period)
+    private function getPeriodRange($period)
     {
         $now = Carbon::now();
 
@@ -152,45 +144,31 @@ class AdminDashboardController extends Controller
                 'Minggu Ini',
                 $now->copy()->startOfWeek(),
                 $now->copy()->endOfWeek(),
-                $now->copy()->subWeek()->startOfWeek(),
-                $now->copy()->subWeek()->endOfWeek(),
             ],
-
             'month' => [
                 'Bulan Ini',
                 $now->copy()->startOfMonth(),
                 $now->copy()->endOfMonth(),
-                $now->copy()->subMonth()->startOfMonth(),
-                $now->copy()->subMonth()->endOfMonth(),
             ],
-
             'year' => [
                 'Tahun Ini',
                 $now->copy()->startOfYear(),
                 $now->copy()->endOfYear(),
-                $now->copy()->subYear()->startOfYear(),
-                $now->copy()->subYear()->endOfYear(),
             ],
-
             'all' => [
                 'Semua Data',
                 null,
                 null,
-                null,
-                null,
             ],
-
             default => [
                 'Hari Ini',
                 $now->copy()->startOfDay(),
                 $now->copy()->endOfDay(),
-                $now->copy()->subDay()->startOfDay(),
-                $now->copy()->subDay()->endOfDay(),
             ],
         };
     }
 
-    private function bookingRevenue($booking)
+    private function getBookingRevenue($booking)
     {
         if (!empty($booking->invoice_total)) {
             return (int) $booking->invoice_total;
@@ -214,6 +192,52 @@ class AdminDashboardController extends Controller
             default => 0,
         };
 
-        return $servicePrice;
+        return $servicePrice
+            + (int) ($booking->transport_cost ?? 0)
+            + (int) ($booking->biaya_transport ?? 0);
+    }
+
+    private function getSalesTrend($bookings, $period)
+    {
+        if ($period === 'today') {
+            $labels = collect(range(8, 22))->map(function ($hour) {
+                return str_pad($hour, 2, '0', STR_PAD_LEFT) . ':00';
+            });
+
+            $values = $labels->map(function ($label) use ($bookings) {
+                return $bookings
+                    ->filter(function ($booking) use ($label) {
+                        if (empty($booking->time)) {
+                            return false;
+                        }
+
+                        return Carbon::parse($booking->time)->format('H:00') === $label;
+                    })
+                    ->where('status', 'Approved')
+                    ->sum('dashboard_total');
+            });
+
+            return [
+                'labels' => $labels->values(),
+                'values' => $values->values(),
+            ];
+        }
+
+        $grouped = $bookings
+            ->where('status', 'Approved')
+            ->groupBy(function ($booking) {
+                if (empty($booking->date)) {
+                    return 'Tanpa Tanggal';
+                }
+
+                return Carbon::parse($booking->date)->format('d M');
+            });
+
+        return [
+            'labels' => $grouped->keys()->values(),
+            'values' => $grouped->map(function ($items) {
+                return $items->sum('dashboard_total');
+            })->values(),
+        ];
     }
 }
