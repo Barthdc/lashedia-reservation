@@ -8,12 +8,12 @@ use App\Models\Stylist;
 
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GoogleCalendarController;
+use App\Http\Controllers\LocationController;
+
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\PowerBiBookingController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\LocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +22,6 @@ use App\Http\Controllers\LocationController;
 */
 
 Route::redirect('/', '/home');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -34,15 +33,12 @@ Route::redirect('/', '/home');
 */
 
 Route::middleware(['auth'])->get('/dashboard', function () {
-
     if (Auth::user() && Auth::user()->role === 'admin') {
         return redirect()->route('admin.dashboard');
     }
 
     return redirect()->route('home');
-
 })->name('dashboard');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -51,66 +47,35 @@ Route::middleware(['auth'])->get('/dashboard', function () {
 */
 
 Route::get('/home', function () {
-
     $galleries = Gallery::latest()->take(6)->get();
-    $stylists  = Stylist::latest()->get();
+    $stylists = Stylist::latest()->get();
 
     return view('home', compact('galleries', 'stylists'));
-
 })->name('home');
 
-
-/*
-|--------------------------------------------------------------------------
-| PENATA RIAS
-|--------------------------------------------------------------------------
-*/
-
 Route::get('/penata-rias', function () {
-
     $stylists = Stylist::latest()->get();
 
     return view('penata-rias', compact('stylists'));
-
 })->name('penata-rias');
 
-
-/*
-|--------------------------------------------------------------------------
-| GALERI
-|--------------------------------------------------------------------------
-*/
-
 Route::get('/galeri', function () {
-
     $galleries = Gallery::latest()->get();
 
     return view('galeri', compact('galleries'));
-
 })->name('galeri');
 
-
-/*
-|--------------------------------------------------------------------------
-| TENTANG KAMI
-|--------------------------------------------------------------------------
-*/
-
 Route::get('/tentang-kami', function () {
-
     return view('tentang-kami');
-
 })->name('tentang-kami');
 
-
 /*
 |--------------------------------------------------------------------------
-| PESAN USER
+| PESAN / BOOKING USER
 |--------------------------------------------------------------------------
 */
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('/pesan-sekarang', [BookingController::class, 'create'])
         ->name('pesan');
 
@@ -125,35 +90,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/notifikasi', [BookingController::class, 'notifications'])
         ->name('notifikasi');
-
 });
-
 
 /*
 |--------------------------------------------------------------------------
-| GOOGLE CALENDAR
+| GOOGLE CALENDAR ADMIN
 |--------------------------------------------------------------------------
 */
 
 Route::middleware(['auth', 'admin'])->group(function () {
-
     Route::get('/google/auth', [GoogleCalendarController::class, 'redirectToGoogle'])
         ->name('google.auth');
 
     Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback'])
         ->name('google.callback');
-
 });
-
-
-/*
-|--------------------------------------------------------------------------
-| AUTH
-|--------------------------------------------------------------------------
-*/
-
-require __DIR__ . '/auth.php';
-
 
 /*
 |--------------------------------------------------------------------------
@@ -174,7 +125,6 @@ Route::middleware(['auth', 'admin'])
 
         Route::redirect('/', '/admin/dashboard');
 
-
         /*
         |--------------------------------------------------------------------------
         | DASHBOARD ADMIN
@@ -183,7 +133,6 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
-
 
         /*
         |--------------------------------------------------------------------------
@@ -194,16 +143,6 @@ Route::middleware(['auth', 'admin'])
         Route::get('/powerbi/bookings.csv', [PowerBiBookingController::class, 'bookingsCsv'])
             ->name('powerbi.bookings.csv');
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | GALLERY ADMIN
-        |--------------------------------------------------------------------------
-        */
-
-        Route::resource('gallery', GalleryController::class);
-
-
         /*
         |--------------------------------------------------------------------------
         | BOOKING ADMIN
@@ -212,6 +151,9 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/bookings', [AdminBookingController::class, 'index'])
             ->name('bookings.index');
+
+        Route::patch('/bookings/{booking}/status', [AdminBookingController::class, 'updateStatus'])
+            ->name('bookings.updateStatus');
 
         Route::patch('/bookings/{booking}/approve', [AdminBookingController::class, 'approve'])
             ->name('bookings.approve');
@@ -225,6 +167,13 @@ Route::middleware(['auth', 'admin'])
         Route::delete('/bookings/{booking}', [AdminBookingController::class, 'destroy'])
             ->name('bookings.destroy');
 
+        /*
+        |--------------------------------------------------------------------------
+        | GALLERY ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::resource('gallery', GalleryController::class);
 
         /*
         |--------------------------------------------------------------------------
@@ -234,5 +183,12 @@ Route::middleware(['auth', 'admin'])
 
         Route::get('/notifikasi', [BookingController::class, 'notifications'])
             ->name('notifications');
-
     });
+
+/*
+|--------------------------------------------------------------------------
+| AUTH
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__ . '/auth.php';
