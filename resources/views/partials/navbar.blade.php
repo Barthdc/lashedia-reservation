@@ -7,14 +7,62 @@
             <div class="logo-circle">
                 <img
                     src="{{ asset('images/lashedia-logo.png') }}"
-                    alt="Logo"
+                    alt="Logo Lashedia"
                 >
             </div>
+
             <span>Lashedia</span>
         </a>
 
-        <!-- HAMBURGER -->
-        <button class="mobile-toggle" id="mobileToggle" type="button">
+        <!-- PROFILE MOBILE TOP -->
+        <div class="mobile-profile-top">
+
+            @auth
+
+                <button
+                    type="button"
+                    class="mobile-profile-name"
+                    id="mobileProfileName"
+                >
+                    {{ Str::limit(Auth::user()->name, 8) }}
+                </button>
+
+                <div
+                    class="mobile-profile-popup"
+                    id="mobileProfilePopup"
+                >
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <button
+                            type="submit"
+                            class="mobile-logout-btn"
+                        >
+                            Logout
+                        </button>
+                    </form>
+                </div>
+
+            @else
+
+                <a
+                    href="{{ route('register') }}"
+                    class="mobile-login-btn"
+                >
+                    Daftar
+                </a>
+
+            @endauth
+
+        </div>
+
+        <!-- HAMBURGER MOBILE -->
+        <button
+            class="mobile-toggle"
+            id="mobileToggle"
+            type="button"
+            aria-label="Toggle Menu"
+        >
             <span></span>
             <span></span>
             <span></span>
@@ -23,128 +71,180 @@
         <!-- MENU -->
         <ul class="navbar-menu" id="navbarMenu">
 
+            <!-- MENU UMUM -->
             <li>
-                <a href="{{ route('home') }}"
-                   class="{{ request()->routeIs('home') ? 'active' : '' }}">
+                <a
+                    href="{{ route('home') }}"
+                    class="{{ request()->routeIs('home') ? 'active' : '' }}"
+                >
                     Home
                 </a>
             </li>
 
             <li>
-                <a href="{{ route('penata-rias') }}"
-                   class="{{ request()->routeIs('penata-rias') ? 'active' : '' }}">
+                <a
+                    href="{{ route('penata-rias') }}"
+                    class="{{ request()->routeIs('penata-rias') ? 'active' : '' }}"
+                >
                     Artist
                 </a>
             </li>
 
             <li>
-                <a href="{{ route('galeri') }}"
-                   class="{{ request()->routeIs('galeri') ? 'active' : '' }}">
+                <a
+                    href="{{ route('galeri') }}"
+                    class="{{ request()->routeIs('galeri') ? 'active' : '' }}"
+                >
                     Galeri
                 </a>
             </li>
 
-            <li>
-                <a href="{{ route('pesan') }}"
-                   class="{{ request()->routeIs('pesan') ? 'active' : '' }}">
-                    Pesan Sekarang
-                </a>
-            </li>
-
+            <!-- MENU USER LOGIN NON-ADMIN -->
             @auth
-                <li>
-                    <a href="{{ route('riwayat') }}"
-                       class="{{ request()->routeIs('riwayat') ? 'active' : '' }}">
-                        Riwayat
-                    </a>
-                </li>
-            @endauth
 
-            <li>
-                <a href="{{ route('tentang-kami') }}"
-                   class="{{ request()->routeIs('tentang-kami') ? 'active' : '' }}">
-                    Tentang Kami
-                </a>
-            </li>
+                @if(Auth::user()->role !== 'admin')
 
-            @auth
-                <li>
-                    <a href="{{ route('notifikasi') }}"
-                       class="notif-btn">
-                        🔔
-
-                        @if(isset($notifCount) && $notifCount > 0)
-                            <span class="notif-badge">
-                                {{ $notifCount }}
-                            </span>
-                        @endif
-                    </a>
-                </li>
-            @endauth
-
-            <!-- PROFILE MOBILE -->
-            <li class="mobile-profile">
-
-                @auth
-
-                    <div class="mobile-user">
-                        {{ Auth::user()->name }}
-                    </div>
-
-                    @if(Auth::user()->role === 'admin')
-                        <a href="{{ route('admin.dashboard') }}">
-                            Dashboard Admin
+                    <li>
+                        <a
+                            href="{{ route('pesan') }}"
+                            class="{{ request()->routeIs('pesan') ? 'active' : '' }}"
+                        >
+                            Pesan Sekarang
                         </a>
-                    @endif
+                    </li>
 
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
+                    <li>
+                        <a
+                            href="{{ route('riwayat') }}"
+                            class="{{ request()->routeIs('riwayat') ? 'active' : '' }}"
+                        >
+                            Riwayat
+                        </a>
+                    </li>
 
-                        <button type="submit" class="mobile-logout-btn">
-                            Logout
-                        </button>
-                    </form>
+                    <li>
+                        <a
+                            href="{{ route('notifikasi') }}"
+                            class="notif-btn {{ request()->routeIs('notifikasi') ? 'active' : '' }}"
+                        >
+                            🔔
 
-                @else
+                            @if(isset($notifCount) && $notifCount > 0)
+                                <span class="notif-badge">
+                                    {{ $notifCount }}
+                                </span>
+                            @endif
+                        </a>
+                    </li>
 
-                    <a href="{{ route('login') }}" class="mobile-login-btn">
-                        Login
-                    </a>
+                @endif
 
-                    <a href="{{ route('register') }}" class="mobile-register-btn">
-                        Book Now
-                    </a>
+                <!-- MENU ADMIN -->
+                @if(Auth::user()->role === 'admin')
 
-                @endauth
+                    <li>
+                        <a
+                            href="{{ route('pesan') }}"
+                            class="{{ request()->routeIs('pesan') ? 'active' : '' }}"
+                        >
+                            Pesan Sekarang
+                        </a>
+                    </li>
 
-            </li>
+                    <li>
+                        <a
+                            href="{{ route('riwayat') }}"
+                            class="{{ request()->routeIs('riwayat') ? 'active' : '' }}"
+                        >
+                            Riwayat
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="{{ route('notifikasi') }}"
+                            class="notif-btn {{ request()->routeIs('notifikasi') ? 'active' : '' }}"
+                        >
+                            🔔
+
+                            @if(isset($notifCount) && $notifCount > 0)
+                                <span class="notif-badge">
+                                    {{ $notifCount }}
+                                </span>
+                            @endif
+                        </a>
+                    </li>
+
+                @endif
+
+            @endauth
 
         </ul>
 
-        <!-- RIGHT DESKTOP -->
+        <!-- PROFILE DESKTOP -->
         <div class="navbar-right">
 
             @auth
 
                 <div class="profile-dropdown">
 
-                    <button class="profile-btn-premium" type="button">
-                        {{ Str::limit(Auth::user()->name, 5) }}
+                    <button
+                        class="profile-btn-premium"
+                        type="button"
+                    >
+                        {{ Str::limit(Auth::user()->name, 8) }}
                     </button>
 
                     <div class="profile-menu">
 
+                        @if(Auth::user()->role === 'admin')
 
-                       @if(Auth::user()->role === 'admin')
-                            <a href="{{ route('admin.dashboard') }}" class="admin-btn">
+                            <a
+                                href="{{ route('admin.dashboard') }}"
+                                class="admin-btn"
+                            >
                                 Dashboard Admin
                             </a>
+
+                            <a
+                                href="{{ route('admin.bookings.index') }}"
+                                class="admin-btn"
+                            >
+                                Booking Admin
+                            </a>
+
+                            <a
+                                href="{{ route('admin.gallery.index') }}"
+                                class="admin-btn"
+                            >
+                                Gallery Admin
+                            </a>
+
+                        @else
+
+                            <a
+                                href="{{ route('pesan') }}"
+                                class="admin-btn"
+                            >
+                                Pesan Sekarang
+                            </a>
+
+                            <a
+                                href="{{ route('riwayat') }}"
+                                class="admin-btn"
+                            >
+                                Riwayat
+                            </a>
+
                         @endif
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <button type="submit" class="logout-btn">
+                            <button
+                                type="submit"
+                                class="logout-btn"
+                            >
                                 Logout
                             </button>
                         </form>
@@ -155,8 +255,11 @@
 
             @else
 
-                <a href="{{ route('register') }}" class="nav-book-btn">
-                    Book Now
+                <a
+                    href="{{ route('register') }}"
+                    class="profile-btn-premium"
+                >
+                    Daftar
                 </a>
 
             @endauth
@@ -172,10 +275,57 @@
         const mobileToggle = document.getElementById('mobileToggle');
         const navbarMenu = document.getElementById('navbarMenu');
 
+        const mobileProfileName = document.getElementById('mobileProfileName');
+        const mobileProfilePopup = document.getElementById('mobileProfilePopup');
+
         if (mobileToggle && navbarMenu) {
-            mobileToggle.addEventListener('click', function () {
+            mobileToggle.addEventListener('click', function (event) {
+                event.stopPropagation();
+
                 navbarMenu.classList.toggle('active');
                 mobileToggle.classList.toggle('active');
+
+                if (mobileProfilePopup) {
+                    mobileProfilePopup.classList.remove('active');
+                }
+            });
+        }
+
+        if (mobileProfileName && mobileProfilePopup) {
+            mobileProfileName.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                mobileProfilePopup.classList.toggle('active');
+            });
+        }
+
+        document.addEventListener('click', function (event) {
+            if (
+                mobileProfilePopup &&
+                mobileProfileName &&
+                !mobileProfileName.contains(event.target) &&
+                !mobileProfilePopup.contains(event.target)
+            ) {
+                mobileProfilePopup.classList.remove('active');
+            }
+        });
+
+        if (navbarMenu) {
+            const menuLinks = navbarMenu.querySelectorAll('a');
+
+            menuLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    navbarMenu.classList.remove('active');
+
+                    if (mobileToggle) {
+                        mobileToggle.classList.remove('active');
+                    }
+
+                    if (mobileProfilePopup) {
+                        mobileProfilePopup.classList.remove('active');
+                    }
+                });
             });
         }
     });

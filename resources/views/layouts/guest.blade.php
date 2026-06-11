@@ -153,5 +153,28 @@
     </head>
     <body>
         {{ $slot }}
+        <script>
+    let lastScrollTop = 0;
+
+    const navbar = document.querySelector('.navbar-premium') || document.querySelector('.navbar');
+
+    window.addEventListener('scroll', function(){
+        if(!navbar){
+            return;
+        }
+
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if(currentScroll > lastScrollTop && currentScroll > 120){
+            navbar.classList.add('navbar-hide');
+            navbar.classList.remove('navbar-show');
+        }else{
+            navbar.classList.remove('navbar-hide');
+            navbar.classList.add('navbar-show');
+        }
+
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+</script>
     </body>
 </html>

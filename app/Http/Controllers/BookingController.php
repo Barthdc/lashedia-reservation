@@ -17,12 +17,6 @@ class BookingController extends Controller
             storage_path('app/google-calendar-token.json')
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | BLOKIR TANGGAL WEDDING BERDASARKAN STYLIST
-        |--------------------------------------------------------------------------
-        */
-
         $blockedWeddingDates = Booking::where('service', 'Wedding Makeup')
             ->where('status', '!=', 'Rejected')
             ->whereNotNull('stylist')
@@ -37,12 +31,6 @@ class BookingController extends Controller
                     ->unique()
                     ->values();
             });
-
-        /*
-        |--------------------------------------------------------------------------
-        | BLOKIR JAM 3 JAM KE DEPAN BERDASARKAN STYLIST
-        |--------------------------------------------------------------------------
-        */
 
         $timeBlocks = Booking::where('status', '!=', 'Rejected')
             ->whereNotNull('stylist')
@@ -81,25 +69,10 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        /*
-        |--------------------------------------------------------------------------
-        | VALIDASI FORM BOOKING
-        |--------------------------------------------------------------------------
-        */
-
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-
-            /*
-            |--------------------------------------------------------------------------
-            | LOKASI LEAFLET
-            |--------------------------------------------------------------------------
-            | Tidak memakai input manual desa/kecamatan/kota/provinsi/pulau.
-            | User memilih titik lokasi dari Leaflet.
-            |--------------------------------------------------------------------------
-            */
 
             'full_address' => 'required',
             'latitude' => 'required|numeric',
@@ -120,14 +93,6 @@ class BookingController extends Controller
         $newStart = Carbon::parse($bookingDate . ' ' . $request->time);
         $newEnd = $newStart->copy()->addHours(3);
 
-        /*
-        |--------------------------------------------------------------------------
-        | VALIDASI 1:
-        | JIKA ADA WEDDING PADA STYLIST YANG SAMA,
-        | TANGGAL TERSEBUT DIBLOKIR UNTUK STYLIST ITU SAJA
-        |--------------------------------------------------------------------------
-        */
-
         $hasWeddingBookingForSameStylist = Booking::whereDate('date', $bookingDate)
             ->where('service', 'Wedding Makeup')
             ->where('stylist', $selectedStylist)
@@ -141,14 +106,6 @@ class BookingController extends Controller
                     'date' => 'Tanggal ini sudah diblokir karena stylist ' . $selectedStylist . ' memiliki booking Wedding Makeup.',
                 ]);
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | VALIDASI 2:
-        | JIKA USER MEMILIH WEDDING,
-        | CEK APAKAH STYLIST YANG SAMA SUDAH ADA BOOKING DI TANGGAL ITU
-        |--------------------------------------------------------------------------
-        */
 
         if ($request->service === 'Wedding Makeup') {
             $hasAnyBookingForSameStylistOnDate = Booking::whereDate('date', $bookingDate)
@@ -164,13 +121,6 @@ class BookingController extends Controller
                     ]);
             }
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | VALIDASI 3:
-        | BLOKIR JAM 3 JAM KE DEPAN HANYA UNTUK STYLIST YANG SAMA
-        |--------------------------------------------------------------------------
-        */
 
         $bookingsOnDateForSameStylist = Booking::whereDate('date', $bookingDate)
             ->where('stylist', $selectedStylist)
@@ -198,12 +148,6 @@ class BookingController extends Controller
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | HITUNG JARAK DAN BIAYA TRANSPORT DARI LOKASI MUA
-        |--------------------------------------------------------------------------
-        */
-
         $muaLatitude = env('MUA_LATITUDE', -6.170170);
         $muaLongitude = env('MUA_LONGITUDE', 106.640300);
 
@@ -216,12 +160,6 @@ class BookingController extends Controller
 
         $transport = $this->calculateTransportCost($distanceKm);
 
-        /*
-        |--------------------------------------------------------------------------
-        | UPLOAD BUKTI PEMBAYARAN
-        |--------------------------------------------------------------------------
-        */
-
         $paymentProofPath = null;
 
         if ($request->hasFile('payment_proof')) {
@@ -230,24 +168,12 @@ class BookingController extends Controller
                 ->store('payment_proofs', 'public');
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | SIMPAN BOOKING
-        |--------------------------------------------------------------------------
-        */
-
         $booking = Booking::create([
             'user_id' => Auth::id(),
 
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-
-            /*
-            |--------------------------------------------------------------------------
-            | DATA LOKASI LEAFLET
-            |--------------------------------------------------------------------------
-            */
 
             'full_address' => $request->full_address,
             'latitude' => $request->latitude,
@@ -259,12 +185,6 @@ class BookingController extends Controller
             'transport_cost' => $transport['cost'],
             'transport_note' => $transport['note'],
 
-            /*
-            |--------------------------------------------------------------------------
-            | DATA BOOKING
-            |--------------------------------------------------------------------------
-            */
-
             'service' => $request->service,
             'date' => $bookingDate,
             'time' => $request->time,
@@ -274,12 +194,6 @@ class BookingController extends Controller
             'payment_proof' => $paymentProofPath,
             'status' => 'Pending',
         ]);
-
-        /*
-        |--------------------------------------------------------------------------
-        | KIRIM KE GOOGLE CALENDAR
-        |--------------------------------------------------------------------------
-        */
 
         try {
             app(GoogleCalendarService::class)->createBookingEvent($booking);
@@ -297,15 +211,6 @@ class BookingController extends Controller
             'Booking berhasil dikirim dan masuk ke Google Calendar.'
         );
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | HITUNG JARAK DALAM KM
-    |--------------------------------------------------------------------------
-    | Menggunakan rumus Haversine.
-    | Ini menghitung jarak garis lurus dari lokasi MUA ke lokasi customer.
-    |--------------------------------------------------------------------------
-    */
 
     private function calculateDistanceKm($lat1, $lon1, $lat2, $lon2)
     {
@@ -327,12 +232,6 @@ class BookingController extends Controller
 
         return round($earthRadius * $c, 2);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | HITUNG BIAYA TRANSPORT BERDASARKAN TABEL JARAK
-    |--------------------------------------------------------------------------
-    */
 
     private function calculateTransportCost($distanceKm)
     {
@@ -404,10 +303,7 @@ class BookingController extends Controller
                 ->get();
         }
 
-        return view(
-            'riwayat',
-            compact('bookings')
-        );
+        return view('riwayat', compact('bookings'));
     }
 
     public function notifications()
@@ -420,9 +316,6 @@ class BookingController extends Controller
                 ->get();
         }
 
-        return view(
-            'notifikasi',
-            compact('bookings')
-        );
+        return view('notifikasi', compact('bookings'));
     }
 }

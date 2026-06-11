@@ -7430,3 +7430,1211 @@ button.nav-book-btn:hover,
 .leaflet-control-container{
     z-index:1 !important;
 }
+
+/* =====================================
+   FIX JARAK BUTTON ADMIN TOPBAR
+   Dashboard - Booking - Gallery - Logout
+===================================== */
+
+.admin-navbar{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:28px !important;
+}
+
+/* area tombol kanan admin */
+.admin-menu,
+.admin-navbar ul,
+.admin-navbar .admin-menu{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+    gap:18px !important;
+    margin-bottom:16px !important; /* jarak Y ke tombol logout */
+}
+
+/* tombol Dashboard, Booking, Gallery */
+.admin-menu a,
+.admin-navbar ul li a{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    min-width:100px !important;
+    padding:13px 24px !important;
+
+    border-radius:999px !important;
+    border:2px solid transparent !important;
+
+    text-decoration:none !important;
+    font-weight:800 !important;
+
+    transition:.25s ease !important;
+}
+
+/* area logout */
+.admin-logout,
+.admin-navbar form,
+.admin-navbar .logout-form{
+    margin-top:16px !important; /* jarak Y dari menu atas */
+}
+
+/* tombol logout */
+.admin-logout,
+.admin-navbar form button{
+    width:100% !important;
+    min-width:340px !important;
+
+    padding:13px 24px !important;
+
+    border-radius:999px !important;
+    border:2px solid #1f1f1f !important;
+
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+
+    font-weight:800 !important;
+}
+
+/* hover */
+.admin-menu a:hover,
+.admin-navbar ul li a:hover,
+.admin-logout:hover,
+.admin-navbar form button:hover{
+    transform:translateY(-2px) !important;
+}
+
+/* =====================================
+   NAVBAR SLIM + AUTO HIDE SAAT SCROLL
+===================================== */
+
+/* navbar lebih ramping */
+.navbar-premium,
+.navbar{
+    position:fixed !important;
+    top:0 !important;
+    left:0 !important;
+    width:100% !important;
+
+    z-index:9999 !important;
+
+    padding:10px 0 !important;
+    background:#f7c8d8 !important;
+
+    transition:transform .35s ease, padding .25s ease, box-shadow .25s ease !important;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08) !important;
+}
+
+/* saat scroll ke bawah navbar hilang */
+.navbar-hide{
+    transform:translateY(-120%) !important;
+}
+
+/* saat navbar muncul */
+.navbar-show{
+    transform:translateY(0) !important;
+}
+
+/* tinggi area dalam navbar */
+.navbar-inner{
+    min-height:58px !important;
+    padding:0 60px !important;
+
+    display:flex !important;
+    align-items:center !important;
+}
+
+/* kecilkan logo */
+.logo-circle,
+.navbar__brand-icon{
+    width:42px !important;
+    height:42px !important;
+}
+
+.navbar-logo span,
+.navbar__brand span{
+    font-size:34px !important;
+}
+
+/* kecilkan button menu */
+.navbar-menu a,
+.navbar__links a,
+.navbar-right a,
+.navbar-right button,
+.nav-book-btn,
+.profile-btn-premium,
+.logout-btn{
+    padding:10px 20px !important;
+    font-size:14px !important;
+    border-radius:999px !important;
+}
+
+/* beri ruang halaman agar tidak ketutup navbar */
+body{
+    padding-top:86px !important;
+}
+
+/* hero tidak terlalu tertutup navbar */
+.hero-premium,
+.hero{
+    margin-top:0 !important;
+}
+
+/* responsive */
+@media(max-width:900px){
+    .navbar-inner{
+        padding:0 24px !important;
+        min-height:70px !important;
+    }
+
+    .navbar-logo span,
+    .navbar__brand span{
+        font-size:28px !important;
+    }
+
+    body{
+        padding-top:120px !important;
+    }
+}
+
+/* =====================================
+   NAVBAR AUTO HIDE SAAT SCROLL
+===================================== */
+
+.navbar-premium,
+.navbar{
+    transition:transform .35s ease, box-shadow .25s ease !important;
+}
+
+/* navbar hilang saat scroll ke bawah */
+.navbar-hide{
+    transform:translateY(-120%) !important;
+}
+
+/* navbar tampil saat scroll ke atas */
+.navbar-show{
+    transform:translateY(0) !important;
+}
+
+/* =====================================
+   NAVBAR GUEST SIMPLE
+   Home - Artist - Galeri
+===================================== */
+
+.navbar-premium{
+    position:fixed !important;
+    top:0 !important;
+    left:0 !important;
+    width:100% !important;
+    z-index:9999 !important;
+
+    background:#f7c8d8 !important;
+    padding:10px 0 !important;
+
+    border-bottom:1px solid #f3a8c4 !important;
+    box-shadow:0 6px 18px rgba(0,0,0,.08) !important;
+}
+
+.navbar-inner{
+    max-width:1280px !important;
+    margin:auto !important;
+    padding:0 60px !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+
+    gap:28px !important;
+    min-height:62px !important;
+}
+
+/* LOGO */
+.navbar-logo{
+    display:flex !important;
+    align-items:center !important;
+    gap:14px !important;
+
+    text-decoration:none !important;
+}
+
+.logo-circle{
+    width:44px !important;
+    height:44px !important;
+
+    border-radius:50% !important;
+    overflow:hidden !important;
+
+    background:white !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+}
+
+.logo-circle img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+}
+
+.navbar-logo span{
+    font-family:'Playfair Display', serif !important;
+    font-size:34px !important;
+    font-weight:800 !important;
+    color:#1f1f1f !important;
+}
+
+/* MENU */
+.navbar-menu{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    gap:16px !important;
+    list-style:none !important;
+
+    margin:0 !important;
+    padding:0 !important;
+}
+
+.navbar-menu li{
+    list-style:none !important;
+}
+
+.navbar-menu a{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    padding:11px 24px !important;
+
+    border-radius:999px !important;
+    border:2px solid #1f1f1f !important;
+
+    background:transparent !important;
+    color:#1f1f1f !important;
+
+    text-decoration:none !important;
+    font-size:14px !important;
+    font-weight:800 !important;
+
+    transition:.25s ease !important;
+}
+
+.navbar-menu a:hover,
+.navbar-menu a.active{
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px) !important;
+}
+
+/* PROFILE */
+.navbar-right{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-end !important;
+}
+
+.profile-btn-premium{
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    padding:11px 28px !important;
+
+    border-radius:999px !important;
+    border:2px solid #1f1f1f !important;
+
+    background:#ffffff !important;
+    color:#1f1f1f !important;
+
+    font-size:14px !important;
+    font-weight:800 !important;
+    text-decoration:none !important;
+
+    cursor:pointer !important;
+    transition:.25s ease !important;
+}
+
+.profile-btn-premium:hover{
+    background:#f3a8c4 !important;
+    color:#1f1f1f !important;
+    transform:translateY(-2px) !important;
+}
+
+/* DROPDOWN */
+.profile-dropdown{
+    position:relative !important;
+}
+
+.profile-menu{
+    position:absolute !important;
+    top:60px !important;
+    right:0 !important;
+
+    width:210px !important;
+
+    background:#f7c8d8 !important;
+    border:2px solid #1f1f1f !important;
+    border-radius:22px !important;
+
+    padding:14px !important;
+
+    display:flex !important;
+    flex-direction:column !important;
+    gap:12px !important;
+
+    opacity:0 !important;
+    visibility:hidden !important;
+
+    transform:translateY(10px) !important;
+    transition:.25s ease !important;
+
+    box-shadow:0 16px 40px rgba(0,0,0,.16) !important;
+}
+
+.profile-dropdown:hover .profile-menu{
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:translateY(0) !important;
+}
+
+.profile-menu a,
+.profile-menu button,
+.admin-btn,
+.logout-btn{
+    width:100% !important;
+
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+
+    padding:12px 18px !important;
+
+    border-radius:999px !important;
+    border:2px solid #1f1f1f !important;
+
+    background:white !important;
+    color:#1f1f1f !important;
+
+    text-decoration:none !important;
+    font-size:14px !important;
+    font-weight:800 !important;
+
+    cursor:pointer !important;
+}
+
+/* BODY OFFSET */
+body{
+    padding-top:86px !important;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .navbar-inner{
+        flex-direction:column !important;
+        padding:16px 24px !important;
+        gap:16px !important;
+    }
+
+    .navbar-menu{
+        flex-wrap:wrap !important;
+    }
+
+    .navbar-right{
+        width:100% !important;
+        justify-content:center !important;
+    }
+
+    body{
+        padding-top:170px !important;
+    }
+}
+/* =====================================================
+   MOBILE PROFILE MASUK KE DALAM NAVBAR
+===================================================== */
+
+.mobile-profile-top{
+    display:none;
+}
+
+@media(max-width:900px){
+
+    .navbar-premium{
+        position:fixed !important;
+        top:0 !important;
+        left:0 !important;
+        width:100% !important;
+        z-index:9999 !important;
+
+        background:#f7c8d8 !important;
+        padding:8px 0 !important;
+
+        border-bottom:1px solid #f3a8c4 !important;
+        box-shadow:0 6px 18px rgba(0,0,0,.08) !important;
+    }
+
+    .navbar-inner{
+        width:100% !important;
+        max-width:100% !important;
+        min-height:58px !important;
+
+        padding:8px 16px !important;
+
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        flex-wrap:wrap !important;
+
+        gap:8px !important;
+        background:#f7c8d8 !important;
+    }
+
+    .navbar-logo{
+        display:flex !important;
+        align-items:center !important;
+        gap:8px !important;
+        text-decoration:none !important;
+    }
+
+    .logo-circle{
+        width:34px !important;
+        height:34px !important;
+        border-radius:50% !important;
+        overflow:hidden !important;
+        background:#ffffff !important;
+    }
+
+    .navbar-logo span{
+        font-size:22px !important;
+        font-weight:800 !important;
+        color:#1f1f1f !important;
+        font-family:'Playfair Display', serif !important;
+    }
+
+    /* profile masuk navbar atas */
+    .mobile-profile-top{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        position:relative !important;
+
+        margin-left:auto !important;
+        margin-right:8px !important;
+    }
+
+    .mobile-profile-name,
+    .mobile-login-btn{
+        display:inline-flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        padding:7px 13px !important;
+
+        border:2px solid #1f1f1f !important;
+        border-radius:999px !important;
+
+        background:#ffffff !important;
+        color:#1f1f1f !important;
+
+        font-size:10px !important;
+        font-weight:900 !important;
+
+        text-decoration:none !important;
+        text-transform:uppercase !important;
+        letter-spacing:.3px !important;
+
+        white-space:nowrap !important;
+        cursor:pointer !important;
+    }
+
+    .mobile-profile-name:hover,
+    .mobile-login-btn:hover{
+        color:#c94f83 !important;
+        background:#fff1f6 !important;
+    }
+
+    .mobile-profile-popup{
+        display:none !important;
+
+        position:absolute !important;
+        top:42px !important;
+        right:0 !important;
+
+        min-width:120px !important;
+        padding:10px 12px !important;
+
+        background:#ffffff !important;
+        border:1px solid #f3a8c4 !important;
+        border-radius:14px !important;
+
+        box-shadow:0 12px 30px rgba(0,0,0,.14) !important;
+        z-index:10002 !important;
+    }
+
+    .mobile-profile-popup.active{
+        display:block !important;
+    }
+
+    .mobile-profile-popup form{
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    .mobile-logout-btn{
+        width:100% !important;
+
+        border:none !important;
+        background:transparent !important;
+        box-shadow:none !important;
+
+        color:#1f1f1f !important;
+
+        font-size:11px !important;
+        font-weight:900 !important;
+        text-transform:uppercase !important;
+
+        cursor:pointer !important;
+    }
+
+    .mobile-logout-btn:hover{
+        color:#c94f83 !important;
+    }
+
+    .mobile-toggle{
+        display:flex !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        width:36px !important;
+        height:36px !important;
+
+        gap:5px !important;
+
+        border:none !important;
+        background:transparent !important;
+        cursor:pointer !important;
+    }
+
+    .mobile-toggle span{
+        width:24px !important;
+        height:2.5px !important;
+        background:#1f1f1f !important;
+        border-radius:999px !important;
+        display:block !important;
+        transition:.3s ease !important;
+    }
+
+    .mobile-toggle.active span:nth-child(1){
+        transform:translateY(7px) rotate(45deg) !important;
+    }
+
+    .mobile-toggle.active span:nth-child(2){
+        opacity:0 !important;
+    }
+
+    .mobile-toggle.active span:nth-child(3){
+        transform:translateY(-7px) rotate(-45deg) !important;
+    }
+
+    .navbar-right{
+        display:none !important;
+    }
+
+    .mobile-profile{
+        display:none !important;
+    }
+
+    .navbar-menu{
+        width:100% !important;
+
+        display:none !important;
+        flex-direction:row !important;
+        align-items:center !important;
+        justify-content:center !important;
+        flex-wrap:wrap !important;
+
+        gap:10px !important;
+
+        padding:12px 0 6px !important;
+        margin:0 !important;
+
+        background:#f7c8d8 !important;
+        list-style:none !important;
+    }
+
+    .navbar-menu.active{
+        display:flex !important;
+    }
+
+    .navbar-menu li{
+        width:auto !important;
+        list-style:none !important;
+    }
+
+    .navbar-menu a{
+        display:inline-flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        padding:7px 12px !important;
+
+        border:2px solid #1f1f1f !important;
+        border-radius:999px !important;
+
+        background:#ffffff !important;
+        color:#1f1f1f !important;
+
+        font-size:10px !important;
+        font-weight:900 !important;
+
+        text-decoration:none !important;
+        text-transform:uppercase !important;
+
+        white-space:nowrap !important;
+    }
+
+    .navbar-menu a:hover,
+    .navbar-menu a.active{
+        color:#c94f83 !important;
+        background:#fff1f6 !important;
+    }
+
+    body{
+        padding-top:74px !important;
+        overflow-x:hidden !important;
+    }
+}
+
+/* =====================================================
+   NAVBAR MOBILE RAPI FINAL
+   Profile masuk navbar atas + menu horizontal
+===================================================== */
+
+.mobile-profile-top{
+    display:none;
+}
+
+@media(max-width:900px){
+
+    .navbar-premium{
+        position:fixed !important;
+        top:0 !important;
+        left:0 !important;
+        width:100% !important;
+        z-index:9999 !important;
+
+        background:#f7c8d8 !important;
+        padding:8px 0 !important;
+
+        border-bottom:1px solid #f3a8c4 !important;
+        box-shadow:0 6px 18px rgba(0,0,0,.08) !important;
+    }
+
+    .navbar-inner{
+        width:100% !important;
+        max-width:100% !important;
+        min-height:58px !important;
+
+        padding:8px 16px !important;
+
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        flex-wrap:wrap !important;
+
+        gap:8px !important;
+        background:#f7c8d8 !important;
+    }
+
+    .navbar-logo{
+        display:flex !important;
+        align-items:center !important;
+        gap:8px !important;
+        text-decoration:none !important;
+    }
+
+    .logo-circle{
+        width:34px !important;
+        height:34px !important;
+        border-radius:50% !important;
+        overflow:hidden !important;
+        background:#ffffff !important;
+    }
+
+    .logo-circle img{
+        width:100% !important;
+        height:100% !important;
+        object-fit:cover !important;
+    }
+
+    .navbar-logo span{
+        font-size:22px !important;
+        font-weight:800 !important;
+        color:#1f1f1f !important;
+        font-family:'Playfair Display', serif !important;
+    }
+
+    .mobile-profile-top{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        position:relative !important;
+
+        margin-left:auto !important;
+        margin-right:6px !important;
+    }
+
+    .mobile-profile-name,
+    .mobile-login-btn{
+        display:inline-flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        padding:7px 12px !important;
+
+        border:2px solid #1f1f1f !important;
+        border-radius:999px !important;
+
+        background:#ffffff !important;
+        color:#1f1f1f !important;
+
+        font-size:10px !important;
+        font-weight:900 !important;
+
+        text-decoration:none !important;
+        text-transform:uppercase !important;
+        letter-spacing:.3px !important;
+
+        white-space:nowrap !important;
+        cursor:pointer !important;
+    }
+
+    .mobile-profile-name:hover,
+    .mobile-login-btn:hover{
+        color:#c94f83 !important;
+        background:#fff1f6 !important;
+    }
+
+    .mobile-profile-popup{
+        display:none !important;
+
+        position:absolute !important;
+        top:42px !important;
+        right:0 !important;
+
+        min-width:120px !important;
+        padding:10px 12px !important;
+
+        background:#ffffff !important;
+        border:1px solid #f3a8c4 !important;
+        border-radius:14px !important;
+
+        box-shadow:0 12px 30px rgba(0,0,0,.14) !important;
+        z-index:10002 !important;
+    }
+
+    .mobile-profile-popup.active{
+        display:block !important;
+    }
+
+    .mobile-profile-popup form{
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    .mobile-logout-btn{
+        width:100% !important;
+
+        border:none !important;
+        background:transparent !important;
+        box-shadow:none !important;
+
+        color:#1f1f1f !important;
+
+        font-size:11px !important;
+        font-weight:900 !important;
+        text-transform:uppercase !important;
+
+        cursor:pointer !important;
+    }
+
+    .mobile-logout-btn:hover{
+        color:#c94f83 !important;
+    }
+
+    .mobile-toggle{
+        display:flex !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        width:36px !important;
+        height:36px !important;
+
+        gap:5px !important;
+
+        border:none !important;
+        background:transparent !important;
+        cursor:pointer !important;
+    }
+
+    .mobile-toggle span{
+        width:24px !important;
+        height:2.5px !important;
+        background:#1f1f1f !important;
+        border-radius:999px !important;
+        display:block !important;
+        transition:.3s ease !important;
+    }
+
+    .mobile-toggle.active span:nth-child(1){
+        transform:translateY(7px) rotate(45deg) !important;
+    }
+
+    .mobile-toggle.active span:nth-child(2){
+        opacity:0 !important;
+    }
+
+    .mobile-toggle.active span:nth-child(3){
+        transform:translateY(-7px) rotate(-45deg) !important;
+    }
+
+    .navbar-right,
+    .mobile-profile{
+        display:none !important;
+    }
+
+    .navbar-menu{
+        width:100% !important;
+
+        display:none !important;
+        flex-direction:row !important;
+        align-items:center !important;
+        justify-content:center !important;
+        flex-wrap:wrap !important;
+
+        gap:10px !important;
+
+        padding:12px 0 6px !important;
+        margin:0 !important;
+
+        background:#f7c8d8 !important;
+        list-style:none !important;
+
+        border:none !important;
+        box-shadow:none !important;
+    }
+
+    .navbar-menu.active{
+        display:flex !important;
+    }
+
+    .navbar-menu li{
+        width:auto !important;
+        list-style:none !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    .navbar-menu a{
+        display:inline-flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        padding:7px 12px !important;
+
+        border:2px solid #1f1f1f !important;
+        border-radius:999px !important;
+
+        background:#ffffff !important;
+        color:#1f1f1f !important;
+
+        font-size:10px !important;
+        font-weight:900 !important;
+
+        text-decoration:none !important;
+        text-transform:uppercase !important;
+
+        white-space:nowrap !important;
+    }
+
+    .navbar-menu a:hover,
+    .navbar-menu a.active{
+        color:#c94f83 !important;
+        background:#fff1f6 !important;
+    }
+
+    body{
+        padding-top:74px !important;
+        overflow-x:hidden !important;
+    }
+}
+/* =====================================================
+   NAVBAR MOBILE RAPI FINAL
+   Profile masuk navbar atas + menu horizontal
+===================================================== */
+
+.mobile-profile-top{
+    display:none;
+}
+
+@media(max-width:900px){
+
+    .navbar-premium{
+        position:fixed !important;
+        top:0 !important;
+        left:0 !important;
+        width:100% !important;
+        z-index:9999 !important;
+
+        background:#f7c8d8 !important;
+        padding:8px 0 !important;
+
+        border-bottom:1px solid #f3a8c4 !important;
+        box-shadow:0 6px 18px rgba(0,0,0,.08) !important;
+    }
+
+    .navbar-inner{
+        width:100% !important;
+        max-width:100% !important;
+        min-height:58px !important;
+
+        padding:8px 16px !important;
+
+        display:flex !important;
+        align-items:center !important;
+        justify-content:space-between !important;
+        flex-wrap:wrap !important;
+
+        gap:8px !important;
+        background:#f7c8d8 !important;
+    }
+
+    .navbar-logo{
+        display:flex !important;
+        align-items:center !important;
+        gap:8px !important;
+        text-decoration:none !important;
+    }
+
+    .logo-circle{
+        width:34px !important;
+        height:34px !important;
+        border-radius:50% !important;
+        overflow:hidden !important;
+        background:#ffffff !important;
+    }
+
+    .logo-circle img{
+        width:100% !important;
+        height:100% !important;
+        object-fit:cover !important;
+    }
+
+    .navbar-logo span{
+        font-size:22px !important;
+        font-weight:800 !important;
+        color:#1f1f1f !important;
+        font-family:'Playfair Display', serif !important;
+    }
+
+    .mobile-profile-top{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        position:relative !important;
+
+        margin-left:auto !important;
+        margin-right:6px !important;
+    }
+
+    .mobile-profile-name,
+    .mobile-login-btn{
+        display:inline-flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        padding:7px 12px !important;
+
+        border:2px solid #1f1f1f !important;
+        border-radius:999px !important;
+
+        background:#ffffff !important;
+        color:#1f1f1f !important;
+
+        font-size:10px !important;
+        font-weight:900 !important;
+
+        text-decoration:none !important;
+        text-transform:uppercase !important;
+        letter-spacing:.3px !important;
+
+        white-space:nowrap !important;
+        cursor:pointer !important;
+    }
+
+    .mobile-profile-name:hover,
+    .mobile-login-btn:hover{
+        color:#c94f83 !important;
+        background:#fff1f6 !important;
+    }
+
+    .mobile-profile-popup{
+        display:none !important;
+
+        position:absolute !important;
+        top:42px !important;
+        right:0 !important;
+
+        min-width:120px !important;
+        padding:10px 12px !important;
+
+        background:#ffffff !important;
+        border:1px solid #f3a8c4 !important;
+        border-radius:14px !important;
+
+        box-shadow:0 12px 30px rgba(0,0,0,.14) !important;
+        z-index:10002 !important;
+    }
+
+    .mobile-profile-popup.active{
+        display:block !important;
+    }
+
+    .mobile-profile-popup form{
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    .mobile-logout-btn{
+        width:100% !important;
+
+        border:none !important;
+        background:transparent !important;
+        box-shadow:none !important;
+
+        color:#1f1f1f !important;
+
+        font-size:11px !important;
+        font-weight:900 !important;
+        text-transform:uppercase !important;
+
+        cursor:pointer !important;
+    }
+
+    .mobile-logout-btn:hover{
+        color:#c94f83 !important;
+    }
+
+    .mobile-toggle{
+        display:flex !important;
+        flex-direction:column !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        width:36px !important;
+        height:36px !important;
+
+        gap:5px !important;
+
+        border:none !important;
+        background:transparent !important;
+        cursor:pointer !important;
+    }
+
+    .mobile-toggle span{
+        width:24px !important;
+        height:2.5px !important;
+        background:#1f1f1f !important;
+        border-radius:999px !important;
+        display:block !important;
+        transition:.3s ease !important;
+    }
+
+    .mobile-toggle.active span:nth-child(1){
+        transform:translateY(7px) rotate(45deg) !important;
+    }
+
+    .mobile-toggle.active span:nth-child(2){
+        opacity:0 !important;
+    }
+
+    .mobile-toggle.active span:nth-child(3){
+        transform:translateY(-7px) rotate(-45deg) !important;
+    }
+
+    .navbar-right,
+    .mobile-profile{
+        display:none !important;
+    }
+
+    .navbar-menu{
+        width:100% !important;
+
+        display:none !important;
+        flex-direction:row !important;
+        align-items:center !important;
+        justify-content:center !important;
+        flex-wrap:wrap !important;
+
+        gap:10px !important;
+
+        padding:12px 0 6px !important;
+        margin:0 !important;
+
+        background:#f7c8d8 !important;
+        list-style:none !important;
+
+        border:none !important;
+        box-shadow:none !important;
+    }
+
+    .navbar-menu.active{
+        display:flex !important;
+    }
+
+    .navbar-menu li{
+        width:auto !important;
+        list-style:none !important;
+        margin:0 !important;
+        padding:0 !important;
+    }
+
+    .navbar-menu a{
+        display:inline-flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+
+        padding:7px 12px !important;
+
+        border:2px solid #1f1f1f !important;
+        border-radius:999px !important;
+
+        background:#ffffff !important;
+        color:#1f1f1f !important;
+
+        font-size:10px !important;
+        font-weight:900 !important;
+
+        text-decoration:none !important;
+        text-transform:uppercase !important;
+
+        white-space:nowrap !important;
+    }
+
+    .navbar-menu a:hover,
+    .navbar-menu a.active{
+        color:#c94f83 !important;
+        background:#fff1f6 !important;
+    }
+
+    body{
+        padding-top:74px !important;
+        overflow-x:hidden !important;
+    }
+}
+

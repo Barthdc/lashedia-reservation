@@ -34,5 +34,12 @@ class Booking extends Model
         'payment_proof',
         'status',
         'reject_reason',
+
+        'invoice_number',
+        'invoice_date',
+        'invoice_subtotal',
+        'invoice_transport',
+        'invoice_total',
+        'invoice_sent_at',
     ];
 }
